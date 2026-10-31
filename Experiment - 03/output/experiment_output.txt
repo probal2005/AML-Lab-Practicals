@@ -1,0 +1,50 @@
+========================================================================
+EXPERIMENT 3: AGNES AND DIANA HIERARCHICAL CLUSTERING
+========================================================================
+
+AIM
+Implement AGNES and DIANA for clustering the Iris dataset.
+
+DATASET
+Iris dataset from scikit-learn.
+Samples: 150
+Features: 4
+Ground-truth species labels were not used to fit the clusters.
+Features were standardized using StandardScaler.
+
+AGNES
+Approach: bottom-up agglomerative clustering.
+Linkage: Ward; distance metric: Euclidean.
+Number of clusters: 3
+Silhouette score: 0.4467
+Cluster sizes: {np.int64(0): np.int64(71), np.int64(1): np.int64(49), np.int64(2): np.int64(30)}
+
+DIANA
+Approach: top-down divisive clustering.
+Split rule: split the cluster with the largest diameter.
+Splinter rule: move points closer on average to the splinter group.
+Number of clusters: 3
+Silhouette score: -0.2660
+Cluster sizes: {np.int64(0): np.int64(1), np.int64(1): np.int64(1), np.int64(2): np.int64(148)}
+
+COMPARISON
+Method  Approach       Linkage_or_Split  Number of Clusters Silhouette Score
+ AGNES Bottom-up           Ward linkage                   3           0.4467
+ DIANA  Top-down Largest-diameter split                   3          -0.2660
+
+INTERPRETATION
+Silhouette scores range from -1 to 1; higher values generally indicate
+better separation and cohesion for the produced clusters.
+Cluster IDs are arbitrary and do not correspond to Iris species names.
+The custom DIANA routine is a simplified divisive implementation, not
+a claim of exact equivalence to every published DIANA variant.
+
+GENERATED OUTPUTS
+experiment_output.txt
+iris_scaled_features.csv
+iris_cluster_assignments.csv
+clustering_comparison.csv
+agnes_dendrogram.png
+agnes_clusters.png
+diana_clusters.png
+silhouette_score_comparison.png

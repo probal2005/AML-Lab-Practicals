@@ -1,0 +1,12 @@
+Metric,Value
+Dataset samples,1797.0
+Input features,64.0
+SOM rows,10.0
+SOM columns,10.0
+Total SOM nodes,100.0
+Occupied SOM nodes,98.0
+Empty SOM nodes,2.0
+Training iterations,1000.0
+Silhouette score,0.07959653984171935
+Quantization error,1.2416162759641767
+Topographic error,0.2938230383973289

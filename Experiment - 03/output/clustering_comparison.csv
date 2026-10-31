@@ -1,0 +1,3 @@
+Method,Approach,Linkage_or_Split,Number of Clusters,Silhouette Score
+AGNES,Bottom-up,Ward linkage,3,0.4466890410285909
+DIANA,Top-down,Largest-diameter split,3,-0.2660161791010336
