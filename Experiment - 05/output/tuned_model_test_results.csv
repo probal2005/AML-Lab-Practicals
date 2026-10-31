@@ -1,0 +1,4 @@
+Model,Test Accuracy
+Tuned Random Forest,0.956140350877193
+Tuned AdaBoost,0.956140350877193
+Tuned Gradient Boosting,0.956140350877193

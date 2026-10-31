@@ -1,0 +1,170 @@
+
+=================================================================
+1. LOADING DIGITS DATASET
+=================================================================
+Dataset shape: (1797, 64)
+Target classes: [0 1 2 3 4 5 6 7 8 9]
+Number of samples: 1797
+Number of features: 64
+Number of classes: 10
+
+=================================================================
+2. TRAIN-TEST SPLIT
+=================================================================
+Training samples: 1437
+Testing samples: 360
+
+=================================================================
+3. DEFINING STACKED RBM MODEL
+=================================================================
+
+=================================================================
+4. DEFINING BASELINE MODEL
+=================================================================
+DBN architecture:
+Input features: 64
+First RBM hidden components: 64
+Second RBM hidden components: 32
+Output classes: 10
+Final classifier: Logistic Regression
+
+=================================================================
+5. STRATIFIED CROSS-VALIDATION
+=================================================================
+
+Evaluating: Logistic Regression on Raw Data
+accuracy: Mean=0.9705, Std=0.0074
+precision_weighted: Mean=0.9716, Std=0.0071
+recall_weighted: Mean=0.9705, Std=0.0074
+f1_weighted: Mean=0.9706, Std=0.0073
+
+Evaluating: DBN Features + Logistic Regression
+accuracy: Mean=0.8425, Std=0.0051
+precision_weighted: Mean=0.8471, Std=0.0053
+recall_weighted: Mean=0.8425, Std=0.0051
+f1_weighted: Mean=0.8422, Std=0.0048
+
+=================================================================
+6. TRAINING FIRST AND SECOND RBM LAYERS
+=================================================================
+Training the complete DBN pipeline...
+First RBM layer trained successfully.
+Second RBM layer trained successfully.
+Logistic Regression classifier trained successfully.
+
+=================================================================
+7. EXTRACTING DBN LEARNED FEATURES
+=================================================================
+Original training features: (1437, 64)
+First RBM training features: (1437, 64)
+Second RBM training features: (1437, 32)
+Original testing features: (360, 64)
+DBN testing features: (360, 32)
+
+=================================================================
+8. TRAINING BASELINE LOGISTIC REGRESSION
+=================================================================
+
+=================================================================
+9. MAKING PREDICTIONS
+=================================================================
+DBN predictions generated.
+Baseline predictions generated.
+
+=================================================================
+10. PERFORMANCE EVALUATION
+=================================================================
+
+Test Set Performance:
+                             Model  Accuracy  Precision   Recall  F1_Score
+   Logistic Regression on Raw Data  0.958333   0.957869 0.958333  0.957848
+DBN Features + Logistic Regression  0.827778   0.830016 0.827778  0.827320
+
+=================================================================
+11. CLASSIFICATION REPORTS
+=================================================================
+
+DBN Classification Report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.97      0.99        36
+           1       0.66      0.69      0.68        36
+           2       0.89      0.91      0.90        35
+           3       0.84      0.84      0.84        37
+           4       0.92      0.97      0.95        36
+           5       0.79      0.81      0.80        37
+           6       0.97      0.97      0.97        36
+           7       0.88      0.83      0.86        36
+           8       0.74      0.57      0.65        35
+           9       0.61      0.69      0.65        36
+
+    accuracy                           0.83       360
+   macro avg       0.83      0.83      0.83       360
+weighted avg       0.83      0.83      0.83       360
+
+
+Raw Logistic Regression Classification Report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.97      0.99        36
+           1       0.88      0.83      0.86        36
+           2       1.00      1.00      1.00        35
+           3       0.97      1.00      0.99        37
+           4       0.95      1.00      0.97        36
+           5       0.97      1.00      0.99        37
+           6       0.97      0.94      0.96        36
+           7       0.97      1.00      0.99        36
+           8       0.91      0.89      0.90        35
+           9       0.94      0.94      0.94        36
+
+    accuracy                           0.96       360
+   macro avg       0.96      0.96      0.96       360
+weighted avg       0.96      0.96      0.96       360
+
+
+=================================================================
+12. CONFUSION MATRICES
+=================================================================
+
+=================================================================
+13. VISUALIZING ORIGINAL DIGIT IMAGES
+=================================================================
+
+=================================================================
+14. VISUALIZING FIRST RBM LEARNED FEATURES
+=================================================================
+
+=================================================================
+15. VISUALIZING SECOND RBM FEATURES
+=================================================================
+
+=================================================================
+16. MODEL ACCURACY COMPARISON
+=================================================================
+
+=================================================================
+17. CROSS-VALIDATION ACCURACY VISUALIZATION
+=================================================================
+
+=================================================================
+18. FINAL RESULT SUMMARY
+=================================================================
+Dataset: Scikit-learn Digits
+Total samples: 1797
+Input features: 64
+Classes: 10
+Training samples: 1437
+Testing samples: 360
+
+Baseline Test Accuracy: 0.9583
+DBN Test Accuracy: 0.8278
+
+DBN Cross-Validation Accuracy:
+Mean: 0.8425
+Standard Deviation: 0.0051
+
+All result files saved in: output
+
+=================================================================
+PRACTICAL 6 EXECUTION COMPLETED SUCCESSFULLY
+=================================================================

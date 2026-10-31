@@ -1,0 +1,310 @@
+===========================================================================
+PRACTICAL 5: ENSEMBLE LEARNING
+CROSS-VALIDATION AND HYPERPARAMETER ANALYSIS
+===========================================================================
+
+1. ENVIRONMENT INFORMATION
+---------------------------------------------------------------------------
+Python version: 3.13.5
+NumPy version: 2.1.3
+Pandas version: 2.2.3
+
+2. LOADING BREAST CANCER WISCONSIN DATASET
+---------------------------------------------------------------------------
+First five records:
+   mean radius  mean texture  mean perimeter  mean area  mean smoothness  mean compactness  mean concavity  mean concave points  mean symmetry  mean fractal dimension  radius error  texture error  perimeter error  area error  smoothness error  compactness error  concavity error  concave points error  symmetry error  fractal dimension error  worst radius  worst texture  worst perimeter  worst area  worst smoothness  worst compactness  worst concavity  worst concave points  worst symmetry  worst fractal dimension  target  diagnosis
+0        17.99         10.38          122.80     1001.0          0.11840           0.27760          0.3001              0.14710         0.2419                 0.07871        1.0950         0.9053            8.589      153.40          0.006399            0.04904          0.05373               0.01587         0.03003                 0.006193         25.38          17.33           184.60      2019.0            0.1622             0.6656           0.7119                0.2654          0.4601                  0.11890       0  malignant
+1        20.57         17.77          132.90     1326.0          0.08474           0.07864          0.0869              0.07017         0.1812                 0.05667        0.5435         0.7339            3.398       74.08          0.005225            0.01308          0.01860               0.01340         0.01389                 0.003532         24.99          23.41           158.80      1956.0            0.1238             0.1866           0.2416                0.1860          0.2750                  0.08902       0  malignant
+2        19.69         21.25          130.00     1203.0          0.10960           0.15990          0.1974              0.12790         0.2069                 0.05999        0.7456         0.7869            4.585       94.03          0.006150            0.04006          0.03832               0.02058         0.02250                 0.004571         23.57          25.53           152.50      1709.0            0.1444             0.4245           0.4504                0.2430          0.3613                  0.08758       0  malignant
+3        11.42         20.38           77.58      386.1          0.14250           0.28390          0.2414              0.10520         0.2597                 0.09744        0.4956         1.1560            3.445       27.23          0.009110            0.07458          0.05661               0.01867         0.05963                 0.009208         14.91          26.50            98.87       567.7            0.2098             0.8663           0.6869                0.2575          0.6638                  0.17300       0  malignant
+4        20.29         14.34          135.10     1297.0          0.10030           0.13280          0.1980              0.10430         0.1809                 0.05883        0.7572         0.7813            5.438       94.44          0.011490            0.02461          0.05688               0.01885         0.01756                 0.005115         22.54          16.67           152.20      1575.0            0.1374             0.2050           0.4000                0.1625          0.2364                  0.07678       0  malignant
+
+Dataset shape: (569, 32)
+Number of samples: 569
+Number of features: 30
+Target classes: [np.str_('malignant'), np.str_('benign')]
+
+Class distribution:
+diagnosis
+benign       357
+malignant    212
+
+Missing values: 0
+
+3. TRAIN-TEST SPLIT
+---------------------------------------------------------------------------
+Training samples: 455
+Testing samples: 114
+Feature scaling: Not required for the selected tree-based ensemble models.
+
+4. DEFINING ENSEMBLE MODELS
+---------------------------------------------------------------------------
+Random Forest: RandomForestClassifier
+AdaBoost: AdaBoostClassifier
+Gradient Boosting: GradientBoostingClassifier
+
+5. FIVE-FOLD CROSS-VALIDATION
+---------------------------------------------------------------------------
+
+Random Forest
+Fold scores: [0.967  0.956  0.9341 0.967  0.989 ]
+Mean accuracy: 0.9626
+Standard deviation: 0.0179
+
+AdaBoost
+Fold scores: [0.989  0.9451 0.9451 0.967  0.989 ]
+Mean accuracy: 0.9670
+Standard deviation: 0.0197
+
+Gradient Boosting
+Fold scores: [0.956  0.9451 0.9341 0.9451 0.978 ]
+Mean accuracy: 0.9516
+Standard deviation: 0.0149
+
+Cross-validation comparison:
+            Model  Mean CV Accuracy  Standard Deviation  Minimum CV Accuracy  Maximum CV Accuracy
+    Random Forest          0.962637            0.017855             0.934066             0.989011
+         AdaBoost          0.967033            0.019658             0.945055             0.989011
+Gradient Boosting          0.951648            0.014906             0.934066             0.978022
+
+6. BASELINE MODEL TEST EVALUATION
+---------------------------------------------------------------------------
+
+=================================================================
+MODEL: Random Forest
+=================================================================
+
+Confusion Matrix:
+[[39  3]
+ [ 2 70]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+   malignant       0.95      0.93      0.94        42
+      benign       0.96      0.97      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+=================================================================
+MODEL: AdaBoost
+=================================================================
+
+Confusion Matrix:
+[[38  4]
+ [ 1 71]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+   malignant       0.97      0.90      0.94        42
+      benign       0.95      0.99      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+=================================================================
+MODEL: Gradient Boosting
+=================================================================
+
+Confusion Matrix:
+[[38  4]
+ [ 1 71]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+   malignant       0.97      0.90      0.94        42
+      benign       0.95      0.99      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+Baseline test accuracy:
+            Model  Test Accuracy
+    Random Forest        0.95614
+         AdaBoost        0.95614
+Gradient Boosting        0.95614
+
+7. RANDOM FOREST HYPERPARAMETER TUNING
+---------------------------------------------------------------------------
+Best parameters: {'max_depth': None, 'min_samples_split': 2, 'n_estimators': 150}
+Best CV accuracy: 0.9648
+
+8. ADABOOST HYPERPARAMETER TUNING
+---------------------------------------------------------------------------
+Best parameters: {'learning_rate': 1.0, 'n_estimators': 100}
+Best CV accuracy: 0.9802
+
+9. GRADIENT BOOSTING HYPERPARAMETER TUNING
+---------------------------------------------------------------------------
+Best parameters: {'learning_rate': 0.5, 'max_depth': 2, 'n_estimators': 100}
+Best CV accuracy: 0.9692
+
+10. SAVING HYPERPARAMETER SEARCH RESULTS
+---------------------------------------------------------------------------
+            Model                                                  Best Parameters  Best CV Accuracy  Number of Combinations
+    Random Forest {'max_depth': None, 'min_samples_split': 2, 'n_estimators': 150}          0.964835                      16
+         AdaBoost                      {'learning_rate': 1.0, 'n_estimators': 100}          0.980220                      15
+Gradient Boosting      {'learning_rate': 0.5, 'max_depth': 2, 'n_estimators': 100}          0.969231                      16
+
+11. TUNED MODEL TEST EVALUATION
+---------------------------------------------------------------------------
+
+Tuned Random Forest
+Test accuracy: 0.9561
+
+Confusion Matrix:
+[[39  3]
+ [ 2 70]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+   malignant       0.95      0.93      0.94        42
+      benign       0.96      0.97      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+Tuned AdaBoost
+Test accuracy: 0.9561
+
+Confusion Matrix:
+[[38  4]
+ [ 1 71]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+   malignant       0.97      0.90      0.94        42
+      benign       0.95      0.99      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+Tuned Gradient Boosting
+Test accuracy: 0.9561
+
+Confusion Matrix:
+[[38  4]
+ [ 1 71]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+   malignant       0.97      0.90      0.94        42
+      benign       0.95      0.99      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+Tuned model comparison:
+                  Model  Test Accuracy
+    Tuned Random Forest        0.95614
+         Tuned AdaBoost        0.95614
+Tuned Gradient Boosting        0.95614
+
+12. GENERATING COMPARISON GRAPHS
+---------------------------------------------------------------------------
+
+16. FINAL RESULT
+---------------------------------------------------------------------------
+Best-performing tuned model: Tuned Random Forest
+Test accuracy: 0.9561
+
+Important interpretation:
+The best model is selected using the highest test accuracy among the tuned models.
+Cross-validation scores estimate performance during model selection, while the held-out test set provides the final evaluation.
+
+Total execution time: 49.44 seconds
+
+Generated output files:
+  adaboost_classification_report.csv (405 bytes)
+  adaboost_confusion_matrix.png (73,599 bytes)
+  adaboost_grid_search_results.csv (3,427 bytes)
+  baseline_test_results.csv (115 bytes)
+  baseline_vs_tuned_accuracy.png (155,466 bytes)
+  baseline_vs_tuned_comparison.csv (198 bytes)
+  best_hyperparameter_cv_accuracy.png (141,837 bytes)
+  breast_cancer_dataset.csv (126,014 bytes)
+  cross_validation_accuracy.png (139,075 bytes)
+  cross_validation_results.csv (351 bytes)
+  experiment_output.txt (11,014 bytes)
+  gradient_boosting_classification_report.csv (405 bytes)
+  gradient_boosting_confusion_matrix.png (76,367 bytes)
+  gradient_boosting_grid_search_results.csv (8,007 bytes)
+  hyperparameter_tuning_summary.csv (343 bytes)
+  random_forest_classification_report.csv (404 bytes)
+  random_forest_confusion_matrix.png (76,682 bytes)
+  random_forest_grid_search_results.csv (10,631 bytes)
+  tuned_adaboost_confusion_matrix.png (75,372 bytes)
+  tuned_gradient_boosting_confusion_matrix.png (78,714 bytes)
+  tuned_model_test_accuracy.png (149,302 bytes)
+  tuned_model_test_results.csv (133 bytes)
+  tuned_random_forest_confusion_matrix.png (78,782 bytes)
+
+===========================================================================
+PRACTICAL 5 EXECUTION COMPLETED SUCCESSFULLY
+===========================================================================
+Exception ignored in: <function ResourceTracker.__del__ at 0x733d77f8e5c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+Exception ignored in: <function ResourceTracker.__del__ at 0x7fe10ad8e5c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+ChildProcessError: [Errno 10] No child processes
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+ChildProcessError: [Errno 10] No child processes
+Exception ignored in: <function ResourceTracker.__del__ at 0x7c029f18e5c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+ChildProcessError: [Errno 10] No child processes
+Exception ignored in: <function ResourceTracker.__del__ at 0x7fad827865c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+ChildProcessError: [Errno 10] No child processes
+Exception ignored in: <function ResourceTracker.__del__ at 0x7d83015865c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+ChildProcessError: [Errno 10] No child processes
+Exception ignored in: <function ResourceTracker.__del__ at 0x70f033d865c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+ChildProcessError: [Errno 10] No child processes
+Exception ignored in: <function ResourceTracker.__del__ at 0x74890eb8a5c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+ChildProcessError: [Errno 10] No child processes
+Exception ignored in: <function ResourceTracker.__del__ at 0x7d0642f8e5c0>
+Traceback (most recent call last):
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 82, in __del__
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 91, in _stop
+  File "/home/probal/anaconda3/lib/python3.13/multiprocessing/resource_tracker.py", line 116, in _stop_locked
+ChildProcessError: [Errno 10] No child processes

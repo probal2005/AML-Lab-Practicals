@@ -1,0 +1,4 @@
+Model,Test Accuracy
+Random Forest,0.956140350877193
+AdaBoost,0.956140350877193
+Gradient Boosting,0.956140350877193
