@@ -1,0 +1,30 @@
+AML LAB PRACTICAL 15 - VIDEO VEHICLE DETECTION
+=================================================================
+Model: yolov8n.pt
+Input video: traffic_video.mp4
+Original resolution: 3840 x 2160
+Inference resolution: 1280 x 720
+Output resolution: 1920 x 1080
+Frame rate: 29.970 FPS
+Expected frames: 372
+Processed frames: 372
+Confidence threshold: 0.25
+Inference device: CPU
+Total inference time: 25.0546 seconds
+Average inference time per frame: 0.0674 seconds
+Total processing time: 47.5919 seconds
+Average processing FPS: 7.8165
+
+VEHICLE DETECTION RECORD COUNTS
+-----------------------------------------------------------------
+bicycle: 0
+bus: 975
+car: 10716
+motorcycle: 2
+truck: 540
+Total detection records: 12233
+
+GENERATED FILES
+output/videos/vehicle_detection_output.mp4
+output/detections/video_detection_results.csv
+output/plots/video_vehicle_count_summary.png

@@ -1,0 +1,39 @@
+2026-10-31 18:24:09,157 | INFO | =================================================================
+2026-10-31 18:24:09,157 | INFO | PRACTICAL 13: EXPLAINABLE AI USING SHAP AND LIME
+2026-10-31 18:24:09,157 | INFO | =================================================================
+2026-10-31 18:24:09,164 | INFO | Dataset loaded successfully.
+2026-10-31 18:24:09,165 | INFO | Total samples: 569
+2026-10-31 18:24:09,165 | INFO | Total features: 30
+2026-10-31 18:24:09,167 | INFO | Class distribution: {0: 212, 1: 357}
+2026-10-31 18:24:09,173 | INFO | Training Random Forest classifier...
+2026-10-31 18:24:09,451 | INFO | Model training completed.
+2026-10-31 18:24:09,451 | INFO | Training samples: 455
+2026-10-31 18:24:09,451 | INFO | Testing samples: 114
+2026-10-31 18:24:09,451 | INFO | Accuracy: 0.956140
+2026-10-31 18:24:09,452 | INFO | Confusion matrix:
+[[39  3]
+ [ 2 70]]
+2026-10-31 18:24:09,452 | INFO | Classification report:
+              precision    recall  f1-score   support
+
+   malignant     0.9512    0.9286    0.9398        42
+      benign     0.9589    0.9722    0.9655        72
+
+    accuracy                         0.9561       114
+   macro avg     0.9551    0.9504    0.9526       114
+weighted avg     0.9561    0.9561    0.9560       114
+
+2026-10-31 18:24:10,140 | INFO | Starting SHAP explanations...
+2026-10-31 18:24:13,629 | INFO | SHAP explanations saved successfully.
+2026-10-31 18:24:13,629 | INFO | Starting LIME explanation...
+2026-10-31 18:24:14,361 | INFO | LIME actual class: malignant
+2026-10-31 18:24:14,361 | INFO | LIME predicted class: malignant
+2026-10-31 18:24:14,361 | INFO | LIME explanation saved successfully.
+2026-10-31 18:24:14,362 | INFO | All 11 expected output files verified.
+2026-10-31 18:24:14,362 | INFO | =================================================================
+2026-10-31 18:24:14,362 | INFO | PRACTICAL 13 COMPLETED SUCCESSFULLY
+2026-10-31 18:24:14,362 | INFO | Final test accuracy: 0.9561
+2026-10-31 18:24:14,362 | INFO | LIME explained sample: 0
+2026-10-31 18:24:14,362 | INFO | LIME actual class: malignant
+2026-10-31 18:24:14,362 | INFO | LIME predicted class: malignant
+2026-10-31 18:24:14,362 | INFO | =================================================================

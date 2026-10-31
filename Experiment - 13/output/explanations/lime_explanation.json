@@ -1,0 +1,52 @@
+{
+    "test_sample_index": 0,
+    "actual_class": "malignant",
+    "predicted_class": "malignant",
+    "predicted_probabilities": {
+        "malignant": 0.9996072779072779,
+        "benign": 0.0003927220927220927
+    },
+    "explained_class": "benign",
+    "lime_features": [
+        {
+            "feature_rule": "worst area > 1033.50",
+            "contribution": -0.14528169853228495
+        },
+        {
+            "feature_rule": "worst concave points > 0.16",
+            "contribution": -0.13370042677146693
+        },
+        {
+            "feature_rule": "worst radius > 18.55",
+            "contribution": -0.09765534677141463
+        },
+        {
+            "feature_rule": "worst perimeter > 124.95",
+            "contribution": -0.0874124372315352
+        },
+        {
+            "feature_rule": "mean concave points > 0.07",
+            "contribution": -0.06384295535997947
+        },
+        {
+            "feature_rule": "mean radius > 15.74",
+            "contribution": -0.06192277496154606
+        },
+        {
+            "feature_rule": "area error > 44.77",
+            "contribution": -0.05732325612728565
+        },
+        {
+            "feature_rule": "mean area > 770.05",
+            "contribution": -0.055086242021265476
+        },
+        {
+            "feature_rule": "mean concavity > 0.13",
+            "contribution": -0.04656331438239671
+        },
+        {
+            "feature_rule": "mean perimeter > 103.70",
+            "contribution": -0.043977564083829725
+        }
+    ]
+}

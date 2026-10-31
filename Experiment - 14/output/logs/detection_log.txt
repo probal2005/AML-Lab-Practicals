@@ -1,0 +1,25 @@
+PRACTICAL 14: OBJECT DETECTION USING YOLOv8
+=======================================================
+Input image: object.jpg
+Image dimensions: 1000 x 543
+Model: yolov8n.pt
+Model architecture: YOLOv8 Nano
+Dataset classes: COCO pretrained classes
+Inference device: CPU
+Confidence threshold: 0.25
+Inference time: 3.3416 seconds
+Total detected objects: 1
+
+DETECTION SUMMARY
+-------------------------------------------------------
+cake: 1
+
+DETAILED DETECTIONS
+-------------------------------------------------------
+ID 1: cake | Confidence: 0.3872 | Bounding box: (0.0, 0.0, 1000.0, 533.56)
+
+GENERATED OUTPUTS
+-------------------------------------------------------
+Annotated image: output/detections/detected_output.jpg
+Detection CSV: output/detections/detection_results.csv
+Comparison plot: output/plots/detection_comparison.png

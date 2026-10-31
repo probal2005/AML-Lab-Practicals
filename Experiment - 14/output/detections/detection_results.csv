@@ -1,0 +1,2 @@
+object_id,class_id,class_name,confidence,x1,y1,x2,y2,width,height
+1,55,cake,0.38715413212776184,0.0,0.0,1000.0,533.56,1000.0,533.56

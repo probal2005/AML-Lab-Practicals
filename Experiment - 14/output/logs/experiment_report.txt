@@ -1,0 +1,66 @@
+PRACTICAL 14: OBJECT DETECTION USING YOLOv8
+============================================
+
+MODEL INFORMATION
+-----------------
+Model: YOLOv8 Nano
+Weights: models/yolov8n.pt
+Framework: Ultralytics
+Task: Object Detection
+Pretrained Dataset: COCO
+Number of Classes: 80
+Inference Device: CPU
+Confidence Threshold: 0.25
+
+INPUT IMAGE
+-----------
+Filename: object.jpg
+Format: JPEG
+Dimensions: 1000 x 543 pixels
+
+EXPERIMENTAL RESULTS
+--------------------
+Total Detected Objects: 1
+Inference Time: 3.3416 seconds
+
+DETECTION DETAILS
+-----------------
+Object ID: 1
+Class ID: 55
+Class Name: cake
+Confidence Score: 0.3872 (38.72%)
+
+BOUNDING BOX
+------------
+X1: 0.00
+Y1: 0.00
+X2: 1000.00
+Y2: 533.56
+Width: 1000.00
+Height: 533.56
+
+GENERATED OUTPUTS
+-----------------
+Annotated Image:
+output/detections/detected_output.jpg
+
+Detection CSV:
+output/detections/detection_results.csv
+
+Comparison Visualization:
+output/plots/detection_comparison.png
+
+Execution Log:
+output/logs/detection_log.txt
+
+OBSERVATION
+-----------
+The pretrained YOLOv8 Nano model detected one object classified
+as cake with a confidence score of 0.3872.
+
+The predicted bounding box covers nearly the entire image.
+Therefore, this experiment demonstrates successful model
+inference and object classification, but the localization
+result should be interpreted cautiously.
+
+END OF EXPERIMENT REPORT

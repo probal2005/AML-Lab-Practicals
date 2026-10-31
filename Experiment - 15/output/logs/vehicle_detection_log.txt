@@ -1,0 +1,26 @@
+AML LAB PRACTICAL 15 - VEHICLE DETECTION
+=======================================================
+Model: yolov8n.pt
+Input image: traffic.jpg
+Image dimensions: 810 x 1080
+Confidence threshold: 0.25
+Inference device: CPU
+Inference time: 2.2883 seconds
+
+VEHICLE COUNTS
+-------------------------------------------------------
+bicycle: 0
+bus: 1
+car: 0
+motorcycle: 0
+truck: 0
+Total vehicles detected: 1
+
+INDIVIDUAL DETECTIONS
+-------------------------------------------------------
+ID=1 | Class=bus | Confidence=0.8727 | Box=[23, 231, 805, 755]
+
+GENERATED FILES
+output/detections/vehicle_detection_output.jpg
+output/detections/vehicle_detection_results.csv
+output/plots/vehicle_detection_comparison.png
