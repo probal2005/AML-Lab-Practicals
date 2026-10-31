@@ -1,0 +1,48 @@
+
+CLIENT 1 CLASSIFICATION REPORT
+=======================================================
+              precision    recall  f1-score   support
+
+   malignant       0.95      0.98      0.96        42
+      benign       0.99      0.97      0.98        72
+
+    accuracy                           0.97       114
+   macro avg       0.97      0.97      0.97       114
+weighted avg       0.97      0.97      0.97       114
+
+
+CLIENT 2 CLASSIFICATION REPORT
+=======================================================
+              precision    recall  f1-score   support
+
+   malignant       0.93      0.95      0.94        42
+      benign       0.97      0.96      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.95      0.96      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+CLIENT 3 CLASSIFICATION REPORT
+=======================================================
+              precision    recall  f1-score   support
+
+   malignant       0.95      0.93      0.94        42
+      benign       0.96      0.97      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+CLIENT 4 CLASSIFICATION REPORT
+=======================================================
+              precision    recall  f1-score   support
+
+   malignant       0.98      0.95      0.96        42
+      benign       0.97      0.99      0.98        72
+
+    accuracy                           0.97       114
+   macro avg       0.97      0.97      0.97       114
+weighted avg       0.97      0.97      0.97       114
+

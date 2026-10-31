@@ -1,0 +1,23 @@
+PRACTICAL 11: SIMPLE IMAGE SEGMENTATION USING OPENCV
+=======================================================
+Input image: object.jpg
+Image dimensions: 1000 x 543
+Channels: 3
+Otsu threshold: 81.00
+Threshold direction: NORMAL
+Contour count: 724
+Largest contour area: 109169.50
+ROI bounding box: (259, 23, 741, 520)
+Mask foreground percentage: 21.00%
+
+Generated files:
+grayscale_image.png
+blurred_image.png
+binary_threshold.png
+inverse_threshold.png
+object_mask.png
+segmented_roi.png
+roi_crop.png
+contour_detection.png
+threshold_diagnostic.png
+image_segmentation_result.png

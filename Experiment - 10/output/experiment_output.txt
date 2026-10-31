@@ -1,0 +1,145 @@
+====================================================================
+PRACTICAL 10: FEDERATED LEARNING
+Breast Cancer Classification Using Multiple Clients
+====================================================================
+
+1. LOADING BREAST CANCER WISCONSIN DATASET
+Total samples       : 569
+Total features      : 30
+Number of classes   : 2
+Class names         : [np.str_('malignant'), np.str_('benign')]
+
+Dataset class distribution:
+target
+malignant    212
+benign       357
+
+2. SPLITTING TRAINING AND TESTING DATA
+Training samples    : 455
+Testing samples     : 114
+
+3. PERFORMING FEATURE SCALING
+Feature scaling completed.
+
+4. DIVIDING TRAINING DATA INTO CLIENTS
+
+Client 1
+-----------------------------------
+Local training samples: 114
+Local class distribution: {np.int64(0): np.int64(44), np.int64(1): np.int64(70)}
+Local Logistic Regression model trained.
+Client 1 Accuracy: 0.9737
+              precision    recall  f1-score   support
+
+   malignant       0.95      0.98      0.96        42
+      benign       0.99      0.97      0.98        72
+
+    accuracy                           0.97       114
+   macro avg       0.97      0.97      0.97       114
+weighted avg       0.97      0.97      0.97       114
+
+
+Client 2
+-----------------------------------
+Local training samples: 114
+Local class distribution: {np.int64(0): np.int64(39), np.int64(1): np.int64(75)}
+Local Logistic Regression model trained.
+Client 2 Accuracy: 0.9561
+              precision    recall  f1-score   support
+
+   malignant       0.93      0.95      0.94        42
+      benign       0.97      0.96      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.95      0.96      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+Client 3
+-----------------------------------
+Local training samples: 114
+Local class distribution: {np.int64(0): np.int64(39), np.int64(1): np.int64(75)}
+Local Logistic Regression model trained.
+Client 3 Accuracy: 0.9561
+              precision    recall  f1-score   support
+
+   malignant       0.95      0.93      0.94        42
+      benign       0.96      0.97      0.97        72
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.95      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+
+Client 4
+-----------------------------------
+Local training samples: 113
+Local class distribution: {np.int64(0): np.int64(48), np.int64(1): np.int64(65)}
+Local Logistic Regression model trained.
+Client 4 Accuracy: 0.9737
+              precision    recall  f1-score   support
+
+   malignant       0.98      0.95      0.96        42
+      benign       0.97      0.99      0.98        72
+
+    accuracy                           0.97       114
+   macro avg       0.97      0.97      0.97       114
+weighted avg       0.97      0.97      0.97       114
+
+
+5. COLLECTING CLIENT PREDICTIONS
+Prediction matrix shape: (4, 114)
+
+6. COMBINING PREDICTIONS USING MAJORITY VOTING
+Global Model Accuracy: 0.9825
+
+7. GLOBAL CLASSIFICATION REPORT
+              precision    recall  f1-score   support
+
+   malignant       0.98      0.98      0.98        42
+      benign       0.99      0.99      0.99        72
+
+    accuracy                           0.98       114
+   macro avg       0.98      0.98      0.98       114
+weighted avg       0.98      0.98      0.98       114
+
+
+8. GLOBAL CONFUSION MATRIX
+[[41  1]
+ [ 1 71]]
+
+9. CLIENT VS GLOBAL ACCURACY
+       Model  Accuracy  Accuracy_Percentage
+    Client 1  0.973684            97.368421
+    Client 2  0.956140            95.614035
+    Client 3  0.956140            95.614035
+    Client 4  0.973684            97.368421
+Global Model  0.982456            98.245614
+
+10. FINAL EXPERIMENT SUMMARY
+=======================================================
+Dataset: .. _breast_cancer_dataset:
+Total clients: 4
+Training samples: 455
+Testing samples: 114
+Client 1 Accuracy: 0.9737
+Client 2 Accuracy: 0.9561
+Client 3 Accuracy: 0.9561
+Client 4 Accuracy: 0.9737
+Global Majority Voting Accuracy: 0.9825
+
+Federated learning simulation completed successfully.
+Raw client training partitions were not exported or combined into a central training dataset.
+
+IMPORTANT: This experiment demonstrates local model training and prediction aggregation. It is not a full federated optimization protocol such as FedAvg.
+
+Generated output files:
+- breast_cancer_dataset.csv (126016 bytes)
+- client_accuracy_results.csv (265 bytes)
+- client_classification_reports.txt (1660 bytes)
+- client_predictions.csv (3368 bytes)
+- experiment_output.txt (4536 bytes)
+- federated_learning_accuracy.png (114865 bytes)
+- global_classification_report.txt (326 bytes)
+- global_confusion_matrix.csv (79 bytes)
+- global_confusion_matrix.png (65840 bytes)

@@ -1,0 +1,410 @@
+2026-10-30 13:02:13,851 | INFO | ============================================================
+2026-10-30 13:02:13,851 | INFO | PRACTICAL 12: BASIC GAN USING MNIST
+2026-10-30 13:02:13,851 | INFO | ============================================================
+2026-10-30 13:02:13,851 | INFO | TensorFlow version: 2.21.0
+2026-10-30 13:02:13,851 | INFO | Epochs: 1
+2026-10-30 13:02:13,852 | INFO | Batch size: 256
+2026-10-30 13:02:13,852 | INFO | Noise dimension: 100
+2026-10-30 13:02:13,852 | INFO | CPU devices: [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')]
+2026-10-30 13:02:13,852 | INFO | GPU devices: []
+2026-10-30 13:02:13,852 | INFO | Loading MNIST dataset...
+2026-10-30 13:02:14,646 | INFO | Dataset shape: (60000, 28, 28, 1)
+2026-10-30 13:02:14,674 | INFO | Pixel range: -1.00 to 1.00
+2026-10-30 13:02:14,861 | INFO | Limited training samples: 512
+2026-10-30 13:02:15,012 | INFO | Model: "Generator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense (Dense)                        │ (None, 12544)               │       1,254,400 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization                  │ (None, 12544)               │          50,176 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu (LeakyReLU)              │ (None, 12544)               │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ reshape (Reshape)                    │ (None, 7, 7, 256)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose (Conv2DTranspose)   │ (None, 7, 7, 128)           │         819,200 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_1                │ (None, 7, 7, 128)           │             512 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_1 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_1 (Conv2DTranspose) │ (None, 14, 14, 64)          │         204,800 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_2                │ (None, 14, 14, 64)          │             256 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_2 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_2 (Conv2DTranspose) │ (None, 28, 28, 1)           │           1,600 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 2,330,944 (8.89 MB)
+ Trainable params: 2,305,472 (8.79 MB)
+ Non-trainable params: 25,472 (99.50 KB)
+
+2026-10-30 13:02:15,031 | INFO | Model: "Discriminator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                      │ (None, 14, 14, 64)          │           1,664 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_3 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_1 (Conv2D)                    │ (None, 7, 7, 128)           │         204,928 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_4 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_1 (Dropout)                  │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 6272)                │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 1)                   │           6,273 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 212,865 (831.50 KB)
+ Trainable params: 212,865 (831.50 KB)
+ Non-trainable params: 0 (0.00 B)
+
+2026-10-30 13:02:15,050 | INFO | Starting GAN training...
+2026-10-30 13:02:20,349 | INFO | Epoch 1/1 | Generator Loss: 0.6656 | Discriminator Loss: 1.3163 | Time: 5.30 sec
+2026-10-30 13:02:21,016 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_001.png
+2026-10-30 13:02:21,447 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/final_generated_images.png
+2026-10-30 13:05:25,924 | INFO | ============================================================
+2026-10-30 13:05:25,925 | INFO | PRACTICAL 12: BASIC GAN USING MNIST
+2026-10-30 13:05:25,925 | INFO | ============================================================
+2026-10-30 13:05:25,925 | INFO | TensorFlow version: 2.21.0
+2026-10-30 13:05:25,925 | INFO | Epochs: 1
+2026-10-30 13:05:25,925 | INFO | Batch size: 256
+2026-10-30 13:05:25,925 | INFO | Noise dimension: 100
+2026-10-30 13:05:25,925 | INFO | CPU devices: [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')]
+2026-10-30 13:05:25,926 | INFO | GPU devices: []
+2026-10-30 13:05:25,926 | INFO | Loading MNIST dataset...
+2026-10-30 13:05:26,380 | INFO | Dataset shape: (60000, 28, 28, 1)
+2026-10-30 13:05:26,411 | INFO | Pixel range: -1.00 to 1.00
+2026-10-30 13:05:26,602 | INFO | Limited training samples: 512
+2026-10-30 13:05:26,752 | INFO | Model: "Generator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense (Dense)                        │ (None, 12544)               │       1,254,400 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization                  │ (None, 12544)               │          50,176 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu (LeakyReLU)              │ (None, 12544)               │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ reshape (Reshape)                    │ (None, 7, 7, 256)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose (Conv2DTranspose)   │ (None, 7, 7, 128)           │         819,200 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_1                │ (None, 7, 7, 128)           │             512 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_1 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_1 (Conv2DTranspose) │ (None, 14, 14, 64)          │         204,800 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_2                │ (None, 14, 14, 64)          │             256 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_2 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_2 (Conv2DTranspose) │ (None, 28, 28, 1)           │           1,600 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 2,330,944 (8.89 MB)
+ Trainable params: 2,305,472 (8.79 MB)
+ Non-trainable params: 25,472 (99.50 KB)
+
+2026-10-30 13:05:26,767 | INFO | Model: "Discriminator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                      │ (None, 14, 14, 64)          │           1,664 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_3 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_1 (Conv2D)                    │ (None, 7, 7, 128)           │         204,928 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_4 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_1 (Dropout)                  │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 6272)                │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 1)                   │           6,273 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 212,865 (831.50 KB)
+ Trainable params: 212,865 (831.50 KB)
+ Non-trainable params: 0 (0.00 B)
+
+2026-10-30 13:05:26,781 | INFO | Starting GAN training...
+2026-10-30 13:05:31,777 | INFO | Epoch 1/1 | Generator Loss: 0.6656 | Discriminator Loss: 1.3163 | Time: 5.00 sec
+2026-10-30 13:05:32,448 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_001.png
+2026-10-30 13:05:32,881 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/final_generated_images.png
+2026-10-30 13:05:33,242 | INFO | Saved loss graph: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/plots/gan_training_loss.png
+2026-10-30 13:05:33,242 | INFO | ============================================================
+2026-10-30 13:05:33,242 | INFO | TRAINING COMPLETED
+2026-10-30 13:05:33,242 | INFO | Total training time: 5.67 seconds
+2026-10-30 13:05:33,242 | INFO | Generator model: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/models/generator.keras
+2026-10-30 13:05:33,242 | INFO | Discriminator model: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/models/discriminator.keras
+2026-10-30 13:05:33,242 | INFO | Training history: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/logs/training_history.csv
+2026-10-30 13:05:33,243 | INFO | Loss graph: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/plots/gan_training_loss.png
+2026-10-30 13:05:33,243 | INFO | ============================================================
+2026-10-30 13:06:23,765 | INFO | ============================================================
+2026-10-30 13:06:23,766 | INFO | PRACTICAL 12: BASIC GAN USING MNIST
+2026-10-30 13:06:23,766 | INFO | ============================================================
+2026-10-30 13:06:23,766 | INFO | TensorFlow version: 2.21.0
+2026-10-30 13:06:23,766 | INFO | Epochs: 50
+2026-10-30 13:06:23,766 | INFO | Batch size: 256
+2026-10-30 13:06:23,766 | INFO | Noise dimension: 100
+2026-10-30 13:06:23,767 | INFO | CPU devices: [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')]
+2026-10-30 13:06:23,767 | INFO | GPU devices: []
+2026-10-30 13:06:23,767 | INFO | Loading MNIST dataset...
+2026-10-30 13:06:24,207 | INFO | Dataset shape: (60000, 28, 28, 1)
+2026-10-30 13:06:24,237 | INFO | Pixel range: -1.00 to 1.00
+2026-10-30 13:06:24,546 | INFO | Model: "Generator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense (Dense)                        │ (None, 12544)               │       1,254,400 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization                  │ (None, 12544)               │          50,176 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu (LeakyReLU)              │ (None, 12544)               │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ reshape (Reshape)                    │ (None, 7, 7, 256)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose (Conv2DTranspose)   │ (None, 7, 7, 128)           │         819,200 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_1                │ (None, 7, 7, 128)           │             512 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_1 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_1 (Conv2DTranspose) │ (None, 14, 14, 64)          │         204,800 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_2                │ (None, 14, 14, 64)          │             256 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_2 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_2 (Conv2DTranspose) │ (None, 28, 28, 1)           │           1,600 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 2,330,944 (8.89 MB)
+ Trainable params: 2,305,472 (8.79 MB)
+ Non-trainable params: 25,472 (99.50 KB)
+
+2026-10-30 13:06:24,570 | INFO | Model: "Discriminator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                      │ (None, 14, 14, 64)          │           1,664 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_3 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_1 (Conv2D)                    │ (None, 7, 7, 128)           │         204,928 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_4 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_1 (Dropout)                  │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 6272)                │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 1)                   │           6,273 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 212,865 (831.50 KB)
+ Trainable params: 212,865 (831.50 KB)
+ Non-trainable params: 0 (0.00 B)
+
+2026-10-30 13:06:24,593 | INFO | Starting GAN training...
+2026-10-30 13:10:21,456 | INFO | Epoch 1/50 | Generator Loss: 0.9151 | Discriminator Loss: 0.8678 | Time: 236.86 sec
+2026-10-30 13:14:53,055 | INFO | Epoch 2/50 | Generator Loss: 0.8288 | Discriminator Loss: 1.2660 | Time: 271.60 sec
+2026-10-30 13:19:34,538 | INFO | Epoch 3/50 | Generator Loss: 0.8384 | Discriminator Loss: 1.2285 | Time: 281.48 sec
+2026-10-30 13:24:18,914 | INFO | Epoch 4/50 | Generator Loss: 0.8751 | Discriminator Loss: 1.2356 | Time: 284.38 sec
+2026-10-30 13:30:19,970 | INFO | Epoch 5/50 | Generator Loss: 0.8547 | Discriminator Loss: 1.3074 | Time: 361.06 sec
+2026-10-30 13:35:38,632 | INFO | Epoch 6/50 | Generator Loss: 0.8440 | Discriminator Loss: 1.2797 | Time: 318.65 sec
+2026-10-30 13:41:15,420 | INFO | Epoch 7/50 | Generator Loss: 0.8675 | Discriminator Loss: 1.2491 | Time: 336.79 sec
+2026-10-30 13:47:45,092 | INFO | Epoch 8/50 | Generator Loss: 0.8871 | Discriminator Loss: 1.2883 | Time: 389.66 sec
+2026-10-30 13:54:27,671 | INFO | Epoch 9/50 | Generator Loss: 0.9096 | Discriminator Loss: 1.2554 | Time: 402.57 sec
+2026-10-30 14:01:00,758 | INFO | Epoch 10/50 | Generator Loss: 0.8880 | Discriminator Loss: 1.2434 | Time: 393.08 sec
+2026-10-30 14:01:01,565 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_010.png
+2026-10-30 14:08:38,893 | INFO | Epoch 11/50 | Generator Loss: 0.8929 | Discriminator Loss: 1.2387 | Time: 457.33 sec
+2026-10-30 14:15:53,094 | INFO | Epoch 12/50 | Generator Loss: 0.9369 | Discriminator Loss: 1.2071 | Time: 434.20 sec
+2026-10-30 14:23:10,472 | INFO | Epoch 13/50 | Generator Loss: 1.0547 | Discriminator Loss: 1.1005 | Time: 437.38 sec
+2026-10-30 14:29:50,438 | INFO | Epoch 14/50 | Generator Loss: 0.9801 | Discriminator Loss: 1.2013 | Time: 399.97 sec
+2026-10-30 14:36:23,155 | INFO | Epoch 15/50 | Generator Loss: 1.0430 | Discriminator Loss: 1.1759 | Time: 392.72 sec
+2026-10-30 15:18:41,213 | INFO | Epoch 16/50 | Generator Loss: 1.0726 | Discriminator Loss: 1.1326 | Time: 2538.06 sec
+2026-10-30 15:37:22,062 | INFO | Epoch 17/50 | Generator Loss: 1.0364 | Discriminator Loss: 1.1204 | Time: 1120.85 sec
+2026-10-30 15:58:44,097 | INFO | Epoch 18/50 | Generator Loss: 1.1148 | Discriminator Loss: 1.0578 | Time: 1282.03 sec
+2026-10-30 16:11:10,474 | INFO | Epoch 19/50 | Generator Loss: 1.1843 | Discriminator Loss: 1.0546 | Time: 746.37 sec
+2026-10-30 16:23:29,083 | INFO | Epoch 20/50 | Generator Loss: 1.2520 | Discriminator Loss: 1.0246 | Time: 738.60 sec
+2026-10-30 16:23:30,313 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_020.png
+2026-10-30 16:35:30,781 | INFO | Epoch 21/50 | Generator Loss: 1.2895 | Discriminator Loss: 1.0325 | Time: 720.47 sec
+2026-10-30 16:45:12,971 | INFO | Epoch 22/50 | Generator Loss: 1.2570 | Discriminator Loss: 1.0063 | Time: 582.19 sec
+2026-10-30 16:55:19,279 | INFO | Epoch 23/50 | Generator Loss: 1.1736 | Discriminator Loss: 1.0780 | Time: 606.31 sec
+2026-10-30 17:05:13,231 | INFO | Epoch 24/50 | Generator Loss: 1.2240 | Discriminator Loss: 1.0353 | Time: 593.95 sec
+2026-10-30 17:14:55,908 | INFO | Epoch 25/50 | Generator Loss: 1.2924 | Discriminator Loss: 1.0281 | Time: 582.68 sec
+2026-10-30 17:24:48,532 | INFO | Epoch 26/50 | Generator Loss: 1.2645 | Discriminator Loss: 1.0398 | Time: 592.62 sec
+2026-10-30 17:34:50,797 | INFO | Epoch 27/50 | Generator Loss: 1.1691 | Discriminator Loss: 1.0713 | Time: 602.27 sec
+2026-10-30 17:44:51,479 | INFO | Epoch 28/50 | Generator Loss: 1.1810 | Discriminator Loss: 1.1048 | Time: 600.68 sec
+2026-10-30 17:57:13,410 | INFO | Epoch 29/50 | Generator Loss: 1.1873 | Discriminator Loss: 1.0865 | Time: 741.93 sec
+2026-10-30 18:07:06,169 | INFO | Epoch 30/50 | Generator Loss: 1.1542 | Discriminator Loss: 1.1393 | Time: 592.75 sec
+2026-10-30 18:07:07,166 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_030.png
+2026-10-30 18:15:34,550 | INFO | Epoch 31/50 | Generator Loss: 1.0915 | Discriminator Loss: 1.1665 | Time: 507.38 sec
+2026-10-30 18:23:53,883 | INFO | Epoch 32/50 | Generator Loss: 1.0555 | Discriminator Loss: 1.1603 | Time: 499.33 sec
+2026-10-30 18:32:10,980 | INFO | Epoch 33/50 | Generator Loss: 1.0729 | Discriminator Loss: 1.1716 | Time: 497.10 sec
+2026-10-30 18:40:31,649 | INFO | Epoch 34/50 | Generator Loss: 1.0486 | Discriminator Loss: 1.1844 | Time: 500.67 sec
+2026-10-30 18:48:48,307 | INFO | Epoch 35/50 | Generator Loss: 0.9996 | Discriminator Loss: 1.2053 | Time: 496.66 sec
+2026-10-30 18:58:43,801 | INFO | Epoch 36/50 | Generator Loss: 0.9879 | Discriminator Loss: 1.2050 | Time: 595.49 sec
+2026-10-30 19:08:43,585 | INFO | Epoch 37/50 | Generator Loss: 0.9567 | Discriminator Loss: 1.2227 | Time: 599.78 sec
+2026-10-30 19:18:51,587 | INFO | Epoch 38/50 | Generator Loss: 0.9466 | Discriminator Loss: 1.2229 | Time: 608.00 sec
+2026-10-30 19:29:20,343 | INFO | Epoch 39/50 | Generator Loss: 0.9713 | Discriminator Loss: 1.2328 | Time: 628.76 sec
+2026-10-30 19:39:03,971 | INFO | Epoch 40/50 | Generator Loss: 0.9452 | Discriminator Loss: 1.2381 | Time: 583.63 sec
+2026-10-30 19:39:04,912 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_040.png
+2026-10-30 19:48:16,902 | INFO | Epoch 41/50 | Generator Loss: 1.0029 | Discriminator Loss: 1.2250 | Time: 551.99 sec
+2026-10-30 19:56:32,221 | INFO | Epoch 42/50 | Generator Loss: 1.0502 | Discriminator Loss: 1.2002 | Time: 495.32 sec
+2026-10-30 20:04:46,731 | INFO | Epoch 43/50 | Generator Loss: 1.0148 | Discriminator Loss: 1.1925 | Time: 494.51 sec
+2026-10-30 20:14:17,443 | INFO | Epoch 44/50 | Generator Loss: 0.9689 | Discriminator Loss: 1.2258 | Time: 570.71 sec
+2026-10-31 00:56:24,717 | INFO | ============================================================
+2026-10-31 00:56:24,717 | INFO | PRACTICAL 12: BASIC GAN USING MNIST
+2026-10-31 00:56:24,717 | INFO | ============================================================
+2026-10-31 00:56:24,718 | INFO | TensorFlow version: 2.21.0
+2026-10-31 00:56:24,718 | INFO | Epochs: 50
+2026-10-31 00:56:24,718 | INFO | Batch size: 256
+2026-10-31 00:56:24,718 | INFO | Noise dimension: 100
+2026-10-31 00:56:24,720 | INFO | CPU devices: [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')]
+2026-10-31 00:56:24,720 | INFO | GPU devices: []
+2026-10-31 00:56:24,720 | INFO | Loading MNIST dataset...
+2026-10-31 00:56:25,768 | INFO | Dataset shape: (60000, 28, 28, 1)
+2026-10-31 00:56:25,799 | INFO | Pixel range: -1.00 to 1.00
+2026-10-31 00:56:26,376 | INFO | Model: "Generator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense (Dense)                        │ (None, 12544)               │       1,254,400 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization                  │ (None, 12544)               │          50,176 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu (LeakyReLU)              │ (None, 12544)               │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ reshape (Reshape)                    │ (None, 7, 7, 256)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose (Conv2DTranspose)   │ (None, 7, 7, 128)           │         819,200 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_1                │ (None, 7, 7, 128)           │             512 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_1 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_1 (Conv2DTranspose) │ (None, 14, 14, 64)          │         204,800 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_2                │ (None, 14, 14, 64)          │             256 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_2 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_transpose_2 (Conv2DTranspose) │ (None, 28, 28, 1)           │           1,600 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 2,330,944 (8.89 MB)
+ Trainable params: 2,305,472 (8.79 MB)
+ Non-trainable params: 25,472 (99.50 KB)
+
+2026-10-31 00:56:26,384 | INFO | Model: "Discriminator"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                      │ (None, 14, 14, 64)          │           1,664 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_3 (LeakyReLU)            │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 14, 14, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_1 (Conv2D)                    │ (None, 7, 7, 128)           │         204,928 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ leaky_re_lu_4 (LeakyReLU)            │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_1 (Dropout)                  │ (None, 7, 7, 128)           │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 6272)                │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 1)                   │           6,273 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 212,865 (831.50 KB)
+ Trainable params: 212,865 (831.50 KB)
+ Non-trainable params: 0 (0.00 B)
+
+2026-10-31 00:56:26,394 | INFO | Starting GAN training...
+2026-10-31 01:06:44,390 | INFO | Epoch 1/50 | Generator Loss: 0.9151 | Discriminator Loss: 0.8678 | Time: 618.00 sec
+2026-10-31 01:17:29,328 | INFO | Epoch 2/50 | Generator Loss: 0.8288 | Discriminator Loss: 1.2660 | Time: 644.94 sec
+2026-10-31 01:28:06,727 | INFO | Epoch 3/50 | Generator Loss: 0.8384 | Discriminator Loss: 1.2285 | Time: 637.40 sec
+2026-10-31 01:37:57,844 | INFO | Epoch 4/50 | Generator Loss: 0.8751 | Discriminator Loss: 1.2356 | Time: 591.12 sec
+2026-10-31 01:45:04,713 | INFO | Epoch 5/50 | Generator Loss: 0.8547 | Discriminator Loss: 1.3074 | Time: 426.87 sec
+2026-10-31 01:52:09,203 | INFO | Epoch 6/50 | Generator Loss: 0.8440 | Discriminator Loss: 1.2797 | Time: 424.49 sec
+2026-10-31 01:59:15,881 | INFO | Epoch 7/50 | Generator Loss: 0.8675 | Discriminator Loss: 1.2491 | Time: 426.68 sec
+2026-10-31 02:06:23,331 | INFO | Epoch 8/50 | Generator Loss: 0.8871 | Discriminator Loss: 1.2883 | Time: 427.45 sec
+2026-10-31 02:12:54,886 | INFO | Epoch 9/50 | Generator Loss: 0.9096 | Discriminator Loss: 1.2554 | Time: 391.55 sec
+2026-10-31 02:18:10,930 | INFO | Epoch 10/50 | Generator Loss: 0.8880 | Discriminator Loss: 1.2434 | Time: 316.04 sec
+2026-10-31 02:18:11,598 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_010.png
+2026-10-31 02:23:20,450 | INFO | Epoch 11/50 | Generator Loss: 0.8929 | Discriminator Loss: 1.2387 | Time: 308.85 sec
+2026-10-31 02:28:25,394 | INFO | Epoch 12/50 | Generator Loss: 0.9369 | Discriminator Loss: 1.2071 | Time: 304.94 sec
+2026-10-31 02:33:30,187 | INFO | Epoch 13/50 | Generator Loss: 1.0547 | Discriminator Loss: 1.1005 | Time: 304.79 sec
+2026-10-31 02:38:34,060 | INFO | Epoch 14/50 | Generator Loss: 0.9801 | Discriminator Loss: 1.2013 | Time: 303.87 sec
+2026-10-31 02:43:37,629 | INFO | Epoch 15/50 | Generator Loss: 1.0430 | Discriminator Loss: 1.1759 | Time: 303.57 sec
+2026-10-31 02:48:40,838 | INFO | Epoch 16/50 | Generator Loss: 1.0726 | Discriminator Loss: 1.1326 | Time: 303.21 sec
+2026-10-31 02:53:47,893 | INFO | Epoch 17/50 | Generator Loss: 1.0364 | Discriminator Loss: 1.1204 | Time: 307.05 sec
+2026-10-31 02:58:56,313 | INFO | Epoch 18/50 | Generator Loss: 1.1148 | Discriminator Loss: 1.0578 | Time: 308.42 sec
+2026-10-31 03:04:07,242 | INFO | Epoch 19/50 | Generator Loss: 1.1843 | Discriminator Loss: 1.0546 | Time: 310.93 sec
+2026-10-31 03:09:14,419 | INFO | Epoch 20/50 | Generator Loss: 1.2520 | Discriminator Loss: 1.0246 | Time: 307.18 sec
+2026-10-31 03:09:15,131 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_020.png
+2026-10-31 03:14:19,322 | INFO | Epoch 21/50 | Generator Loss: 1.2895 | Discriminator Loss: 1.0325 | Time: 304.19 sec
+2026-10-31 03:19:20,407 | INFO | Epoch 22/50 | Generator Loss: 1.2570 | Discriminator Loss: 1.0063 | Time: 301.08 sec
+2026-10-31 03:24:24,319 | INFO | Epoch 23/50 | Generator Loss: 1.1736 | Discriminator Loss: 1.0780 | Time: 303.91 sec
+2026-10-31 03:29:26,211 | INFO | Epoch 24/50 | Generator Loss: 1.2240 | Discriminator Loss: 1.0353 | Time: 301.89 sec
+2026-10-31 03:34:40,227 | INFO | Epoch 25/50 | Generator Loss: 1.2924 | Discriminator Loss: 1.0281 | Time: 314.02 sec
+2026-10-31 03:40:14,484 | INFO | Epoch 26/50 | Generator Loss: 1.2645 | Discriminator Loss: 1.0398 | Time: 334.26 sec
+2026-10-31 03:45:32,976 | INFO | Epoch 27/50 | Generator Loss: 1.1691 | Discriminator Loss: 1.0713 | Time: 318.49 sec
+2026-10-31 03:50:48,575 | INFO | Epoch 28/50 | Generator Loss: 1.1810 | Discriminator Loss: 1.1048 | Time: 315.60 sec
+2026-10-31 03:55:53,950 | INFO | Epoch 29/50 | Generator Loss: 1.1873 | Discriminator Loss: 1.0865 | Time: 305.37 sec
+2026-10-31 04:00:57,415 | INFO | Epoch 30/50 | Generator Loss: 1.1542 | Discriminator Loss: 1.1393 | Time: 303.46 sec
+2026-10-31 04:00:58,001 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_030.png
+2026-10-31 04:06:00,622 | INFO | Epoch 31/50 | Generator Loss: 1.0915 | Discriminator Loss: 1.1665 | Time: 302.62 sec
+2026-10-31 04:11:03,486 | INFO | Epoch 32/50 | Generator Loss: 1.0555 | Discriminator Loss: 1.1603 | Time: 302.86 sec
+2026-10-31 04:16:06,822 | INFO | Epoch 33/50 | Generator Loss: 1.0729 | Discriminator Loss: 1.1716 | Time: 303.34 sec
+2026-10-31 04:21:07,369 | INFO | Epoch 34/50 | Generator Loss: 1.0486 | Discriminator Loss: 1.1844 | Time: 300.55 sec
+2026-10-31 04:26:10,747 | INFO | Epoch 35/50 | Generator Loss: 0.9996 | Discriminator Loss: 1.2053 | Time: 303.38 sec
+2026-10-31 04:31:11,481 | INFO | Epoch 36/50 | Generator Loss: 0.9879 | Discriminator Loss: 1.2050 | Time: 300.73 sec
+2026-10-31 04:36:13,309 | INFO | Epoch 37/50 | Generator Loss: 0.9567 | Discriminator Loss: 1.2227 | Time: 301.83 sec
+2026-10-31 04:41:16,042 | INFO | Epoch 38/50 | Generator Loss: 0.9466 | Discriminator Loss: 1.2229 | Time: 302.73 sec
+2026-10-31 04:46:14,437 | INFO | Epoch 39/50 | Generator Loss: 0.9713 | Discriminator Loss: 1.2328 | Time: 298.40 sec
+2026-10-31 04:51:15,602 | INFO | Epoch 40/50 | Generator Loss: 0.9452 | Discriminator Loss: 1.2381 | Time: 301.16 sec
+2026-10-31 04:51:16,278 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_040.png
+2026-10-31 04:56:16,183 | INFO | Epoch 41/50 | Generator Loss: 1.0029 | Discriminator Loss: 1.2250 | Time: 299.91 sec
+2026-10-31 05:01:16,093 | INFO | Epoch 42/50 | Generator Loss: 1.0502 | Discriminator Loss: 1.2002 | Time: 299.91 sec
+2026-10-31 05:06:14,850 | INFO | Epoch 43/50 | Generator Loss: 1.0148 | Discriminator Loss: 1.1925 | Time: 298.76 sec
+2026-10-31 05:11:16,896 | INFO | Epoch 44/50 | Generator Loss: 0.9689 | Discriminator Loss: 1.2258 | Time: 302.05 sec
+2026-10-31 05:16:16,510 | INFO | Epoch 45/50 | Generator Loss: 0.9442 | Discriminator Loss: 1.2335 | Time: 299.61 sec
+2026-10-31 05:21:15,583 | INFO | Epoch 46/50 | Generator Loss: 0.9391 | Discriminator Loss: 1.2277 | Time: 299.07 sec
+2026-10-31 05:26:14,425 | INFO | Epoch 47/50 | Generator Loss: 0.9597 | Discriminator Loss: 1.2266 | Time: 298.84 sec
+2026-10-31 05:31:13,183 | INFO | Epoch 48/50 | Generator Loss: 0.9717 | Discriminator Loss: 1.2160 | Time: 298.76 sec
+2026-10-31 05:36:12,829 | INFO | Epoch 49/50 | Generator Loss: 0.9470 | Discriminator Loss: 1.2288 | Time: 299.65 sec
+2026-10-31 05:41:10,940 | INFO | Epoch 50/50 | Generator Loss: 0.9374 | Discriminator Loss: 1.2388 | Time: 298.11 sec
+2026-10-31 05:41:11,505 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/epoch_050.png
+2026-10-31 05:41:11,956 | INFO | Saved generated images: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/generated_images/final_generated_images.png
+2026-10-31 05:41:12,413 | INFO | Saved loss graph: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/plots/gan_training_loss.png
+2026-10-31 05:41:12,413 | INFO | ============================================================
+2026-10-31 05:41:12,413 | INFO | TRAINING COMPLETED
+2026-10-31 05:41:12,414 | INFO | Total training time: 17085.11 seconds
+2026-10-31 05:41:12,414 | INFO | Generator model: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/models/generator.keras
+2026-10-31 05:41:12,414 | INFO | Discriminator model: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/models/discriminator.keras
+2026-10-31 05:41:12,414 | INFO | Training history: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/logs/training_history.csv
+2026-10-31 05:41:12,414 | INFO | Loss graph: /home/probal/Downloads/5th  Sem/AML_LAB/Experiment - 12/output/plots/gan_training_loss.png
+2026-10-31 05:41:12,414 | INFO | ============================================================
