@@ -1,0 +1,145 @@
+========================================================================
+EXPERIMENT 2: SVM CLASSIFIER WITH DIFFERENT KERNELS
+========================================================================
+
+1. DATASET INFORMATION
+----------------------------------------
+Dataset: Iris
+Number of samples: 150
+Number of features: 4
+Target classes: setosa, versicolor, virginica
+
+First five rows:
+ sepal length (cm)  sepal width (cm)  petal length (cm)  petal width (cm)  target target_name
+               5.1               3.5                1.4               0.2       0      setosa
+               4.9               3.0                1.4               0.2       0      setosa
+               4.7               3.2                1.3               0.2       0      setosa
+               4.6               3.1                1.5               0.2       0      setosa
+               5.0               3.6                1.4               0.2       0      setosa
+
+Class distribution:
+target_name
+setosa        50
+versicolor    50
+virginica     50
+
+2. TRAIN-TEST SPLIT
+----------------------------------------
+Training samples: 120
+Testing samples: 30
+Test size: 20%
+Random state: 42
+Stratified split: Yes
+
+3. FEATURE SCALING
+----------------------------------------
+StandardScaler fitted on training data and applied to test data.
+
+4. MODEL TRAINING AND EVALUATION
+----------------------------------------
+
+Kernel: linear
+Accuracy: 1.0000 (100.00%)
+Correct predictions: 30/30
+Confusion Matrix:
+[[10  0  0]
+ [ 0 10  0]
+ [ 0  0 10]]
+Classification Report:
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      1.00      1.00        10
+   virginica       1.00      1.00      1.00        10
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+
+Kernel: poly
+Accuracy: 0.9000 (90.00%)
+Correct predictions: 27/30
+Confusion Matrix:
+[[10  0  0]
+ [ 0 10  0]
+ [ 0  3  7]]
+Classification Report:
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       0.77      1.00      0.87        10
+   virginica       1.00      0.70      0.82        10
+
+    accuracy                           0.90        30
+   macro avg       0.92      0.90      0.90        30
+weighted avg       0.92      0.90      0.90        30
+
+
+Kernel: rbf
+Accuracy: 0.9667 (96.67%)
+Correct predictions: 29/30
+Confusion Matrix:
+[[10  0  0]
+ [ 0  9  1]
+ [ 0  0 10]]
+Classification Report:
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      0.90      0.95        10
+   virginica       0.91      1.00      0.95        10
+
+    accuracy                           0.97        30
+   macro avg       0.97      0.97      0.97        30
+weighted avg       0.97      0.97      0.97        30
+
+
+Kernel: sigmoid
+Accuracy: 0.9000 (90.00%)
+Correct predictions: 27/30
+Confusion Matrix:
+[[10  0  0]
+ [ 0  7  3]
+ [ 0  0 10]]
+Classification Report:
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        10
+  versicolor       1.00      0.70      0.82        10
+   virginica       0.77      1.00      0.87        10
+
+    accuracy                           0.90        30
+   macro avg       0.92      0.90      0.90        30
+weighted avg       0.92      0.90      0.90        30
+
+
+5. ACCURACY COMPARISON
+----------------------------------------
+ Kernel Accuracy Accuracy_Percentage  Correct_Predictions  Incorrect_Predictions  Support_Vectors_Total
+ linear   1.0000              100.00                   30                      0                     23
+    rbf   0.9667               96.67                   29                      1                     47
+   poly   0.9000               90.00                   27                      3                     46
+sigmoid   0.9000               90.00                   27                      3                     45
+
+Highest test accuracy: 1.0000 (100.00%)
+Best-performing kernel(s): linear
+
+6. GENERATED OUTPUT FILES
+----------------------------------------
+- classification_details.txt
+- confusion_matrices.png
+- iris_dataset.csv
+- iris_feature_distributions.png
+- kernel_accuracy_comparison.csv
+- kernel_accuracy_comparison.png
+- kernel_accuracy_percentage.png
+
+7. RESULT
+----------------------------------------
+SVM classifiers were trained using linear, polynomial, RBF, and sigmoid kernels.
+The highest observed test accuracy was 100.00%.
+The results show how kernel selection can affect classification performance.
+Feature scaling was applied before model training.
+
+Experiment completed successfully.

@@ -1,0 +1,56 @@
+========================================================================
+PRACTICAL 1: LINEAR, RIDGE AND LASSO REGRESSION
+========================================================================
+Python version: 3.13.5
+
+1. DATASET INFORMATION
+Number of samples: 442
+Number of features: 10
+Features: age, sex, bmi, bp, s1, s2, s3, s4, s5, s6
+Dataset loaded successfully.
+
+2. TRAIN-TEST SPLIT
+Training samples: 353
+Testing samples: 89
+Test size: 20%; random_state=42
+
+3. FEATURE SCALING
+StandardScaler fitted on training data only.
+
+4. MODEL TRAINING
+Linear Regression: trained successfully.
+Ridge Regression: trained successfully.
+Lasso Regression: trained successfully.
+
+5. MODEL PERFORMANCE COMPARISON
+            Model     MAE       MSE    RMSE  R2 Score
+Linear Regression 42.7941 2900.1936 53.8534    0.4526
+ Ridge Regression 42.8120 2892.0146 53.7775    0.4541
+ Lasso Regression 42.8052 2884.6243 53.7087    0.4555
+
+6. COEFFICIENT COMPARISON
+Feature  Linear Regression  Ridge Regression  Lasso Regression
+    age             1.7538            1.8073            1.7305
+    sex           -11.5118          -11.4482          -11.3164
+    bmi            25.6071           25.7327           25.8246
+     bp            16.8289           16.7343           16.6443
+     s1           -44.4489          -34.6720          -29.3584
+     s2            24.6410           17.0531           13.2758
+     s3             7.6770            3.3699            0.5479
+     s4            13.1388           11.7643           10.2362
+     s5            35.1612           31.3784           29.6328
+     s6             2.3514            2.4581            2.3935
+
+7. LASSO FEATURE-SELECTION ANALYSIS
+Lasso coefficients equal to zero: 0 of 10
+
+8. OUTPUT FILES
+output/experiment_output.txt
+output/model_performance.csv
+output/coefficient_comparison.csv
+output/actual_vs_predicted.png
+output/r2_score_comparison.png
+output/model_performance_comparison.png
+output/coefficient_comparison.png
+
+Experiment completed successfully.

@@ -1,0 +1,5 @@
+Kernel,Accuracy,Accuracy_Percentage,Correct_Predictions,Incorrect_Predictions,Support_Vectors_Total
+linear,1.0,100.0,30,0,23
+rbf,0.9666666666666667,96.66666666666667,29,1,47
+poly,0.9,90.0,27,3,46
+sigmoid,0.9,90.0,27,3,45
