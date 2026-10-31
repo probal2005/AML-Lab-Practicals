@@ -1,0 +1,39 @@
+PRACTICAL 9: FEDERATED LEARNING
+==================================================
+Dataset: Breast Cancer Wisconsin Dataset
+Total Samples: 569
+Total Features: 30
+Training Samples: 455
+Testing Samples: 114
+Number of Clients: 5
+Model: Logistic Regression
+Aggregation: Majority Voting
+Global Accuracy: 0.9825
+
+CLIENT ACCURACY RESULTS
+                Client  Training Samples  Accuracy
+              Client 1                91  0.964912
+              Client 2                91  0.973684
+              Client 3                91  0.973684
+              Client 4                91  0.947368
+              Client 5                91  0.964912
+Federated Global Model               455  0.982456
+
+GLOBAL CONFUSION MATRIX
+[[41  1]
+ [ 1 71]]
+
+CLASSIFICATION REPORT
+              precision    recall  f1-score   support
+
+   malignant       0.98      0.98      0.98        42
+      benign       0.99      0.99      0.99        72
+
+    accuracy                           0.98       114
+   macro avg       0.98      0.98      0.98       114
+weighted avg       0.98      0.98      0.98       114
+
+
+NOTE:
+This experiment simulates federated learning using local
+client models and prediction-level majority voting.

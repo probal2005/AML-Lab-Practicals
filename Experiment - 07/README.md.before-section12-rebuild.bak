@@ -1,0 +1,656 @@
+# PRACTICAL 7: IMPLEMENTATION OF GIBBS SAMPLING USING PYTHON
+
+**Mapped Course Outcome:** CO4
+
+**Course Outcome Description:** Analyse and evaluate machine learning models using suitable performance parameters and cross-validation to identify the best-suited techniques for specific applications.
+
+**Programming Language:** Python 3.13.5
+
+**Libraries:** NumPy, Pandas, Matplotlib
+
+**Dataset:** Synthetic Bivariate Normal Probability Distribution
+
+---
+
+## 01. AIM
+
+To implement Gibbs Sampling in Python and understand how it is used to generate samples from a probability distribution when direct sampling from the joint distribution is difficult.
+
+The experiment demonstrates how samples can be generated from a bivariate normal distribution by repeatedly sampling individual variables from their conditional probability distributions.
+
+## 02. OBJECTIVES
+
+1. To understand the concept of sampling from probability distributions.
+2. To study the working of Gibbs Sampling.
+3. To implement Gibbs Sampling using Python.
+4. To generate samples from a joint probability distribution.
+5. To visualize the sampled data using scatter plots, histograms, and trace plots.
+6. To understand how Gibbs Sampling is useful in probabilistic machine learning.
+7. To compare the generated sample statistics with the theoretical parameters of the target distribution.
+8. To understand the importance of burn-in removal in Markov Chain Monte Carlo sampling.
+
+## 03. THEORY
+
+### 3.1 Introduction to Probability Sampling
+
+Probability sampling is a process of generating observations from a specified probability distribution.
+
+In machine learning and statistical modelling, sampling is useful when understanding or approximating a probability distribution is necessary.
+
+For simple probability distributions, direct sampling may be possible. However, for complex joint probability distributions, direct sampling can be difficult.
+
+Markov Chain Monte Carlo (MCMC) methods provide techniques for generating samples from such distributions.
+
+### 3.2 Markov Chain Monte Carlo
+
+Markov Chain Monte Carlo is a family of algorithms used to generate samples from probability distributions.
+
+An MCMC algorithm constructs a Markov chain whose stationary distribution corresponds to the target probability distribution.
+
+The Markov property states that the next state depends on the current state rather than the entire history of previous states.
+
+MCMC methods are particularly useful when direct sampling from a complex probability distribution is difficult.
+
+Gibbs Sampling is one of the important MCMC techniques.
+
+### 3.3 Introduction to Gibbs Sampling
+
+Gibbs Sampling is a Markov Chain Monte Carlo method used to generate samples from a joint probability distribution by repeatedly sampling one variable at a time from its conditional distribution.
+
+Instead of directly sampling all variables simultaneously, Gibbs Sampling updates each variable while keeping the remaining variables fixed at their current values.
+
+For two random variables X and Y, the joint probability distribution is:
+
+\[
+P(X,Y)
+\]
+
+Rather than directly sampling from the joint distribution, Gibbs Sampling uses the conditional distributions:
+
+\[
+P(X\mid Y)
+\]
+
+\[
+P(Y\mid X)
+\]
+
+After repeated iterations, the generated samples approximate the target joint probability distribution, provided the Markov chain satisfies the required convergence conditions.
+
+### 3.4 Basic Idea of Gibbs Sampling
+
+The main idea is that if direct sampling from a joint probability distribution is difficult, but sampling from its conditional distributions is relatively easy, then the conditional distributions can be used to generate samples.
+
+The process works as follows:
+
+1. Initialize the random variables.
+2. Sample X using the conditional distribution P(X | Y).
+3. Update Y using P(Y | X), using the newly sampled X.
+4. Repeat the process for a sufficient number of iterations.
+5. Discard the initial burn-in samples.
+6. Use the remaining samples to approximate the target distribution.
+
+### 3.5 Bivariate Normal Distribution
+
+In this experiment, Gibbs Sampling is applied to a bivariate normal distribution containing two random variables, X and Y.
+
+The distribution is defined by the following parameters:
+
+| Parameter | Symbol | Value |
+|---|---|---:|
+| Mean of X | μX | 0 |
+| Mean of Y | μY | 0 |
+| Standard deviation of X | σX | 1 |
+| Standard deviation of Y | σY | 1 |
+| Correlation | ρ | 0.8 |
+
+The correlation coefficient of 0.8 represents a strong positive linear relationship between X and Y.
+
+### 3.6 Conditional Distribution of X Given Y
+
+For a bivariate normal distribution, the conditional distribution of X given Y is also normal.
+
+Its conditional mean is:
+
+\[
+\mu_{X\mid Y} =
+\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(Y-\mu_Y)
+\]
+
+Its conditional standard deviation is:
+
+\[
+\sigma_{X\mid Y} =
+\sigma_X\sqrt{1-\rho^2}
+\]
+
+Therefore:
+
+\[
+X\mid Y\sim
+N\left(
+\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(Y-\mu_Y),
+\sigma_X^2(1-\rho^2)
+\right)
+\]
+
+### 3.7 Conditional Distribution of Y Given X
+
+Similarly, the conditional distribution of Y given X is:
+
+\[
+\mu_{Y\mid X} =
+\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(X-\mu_X)
+\]
+
+Its conditional standard deviation is:
+
+\[
+\sigma_{Y\mid X} =
+\sigma_Y\sqrt{1-\rho^2}
+\]
+
+Therefore:
+
+\[
+Y\mid X\sim
+N\left(
+\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(X-\mu_X),
+\sigma_Y^2(1-\rho^2)
+\right)
+\]
+
+### 3.8 Burn-in Period
+
+Burn-in is the initial portion of samples generated by an MCMC algorithm that is discarded before statistical analysis.
+
+The initial state of a Markov chain may not represent the target distribution accurately.
+
+Removing the burn-in samples helps reduce the influence of the initial state on the retained sample.
+
+In this experiment:
+
+- Total iterations: 10,000
+- Burn-in iterations: 1,000
+- Retained samples: 9,000
+
+### 3.9 Visualization of Gibbs Sampling
+
+The experiment uses five visualizations:
+
+1. Scatter Plot: Shows the relationship between X and Y samples.
+2. Histogram of X: Shows the distribution of the generated X values.
+3. Histogram of Y: Shows the distribution of the generated Y values.
+4. Trace Plot of X: Shows how X changes across sampling iterations.
+5. Trace Plot of Y: Shows how Y changes across sampling iterations.
+
+### 3.10 Applications of Gibbs Sampling
+
+Gibbs Sampling is useful in:
+
+- Bayesian statistical modelling.
+- Probabilistic machine learning.
+- Bayesian networks.
+- Latent variable models.
+- Approximate inference.
+- Statistical estimation.
+- Models involving complex joint probability distributions.
+
+## 04. SOFTWARE AND HARDWARE REQUIREMENTS
+
+### 4.1 Software Requirements
+
+| Software / Library | Version / Description |
+|---|---|
+| Operating System | Ubuntu Linux |
+| Programming Language | Python 3.13.5 |
+| NumPy | 2.1.3 |
+| Pandas | 2.2.3 |
+| Matplotlib | 3.10.0 |
+| Seaborn | 0.13.2 (optional) |
+| SciPy | 1.15.3 (optional) |
+| Code Editor | VS Code / Cursor / Any Python Editor |
+| Execution Environment | Python Terminal / Jupyter Notebook |
+
+### 4.2 Hardware Requirements
+
+| Component | Requirement |
+|---|---|
+| Processor | Intel/AMD processor |
+| RAM | Minimum 4 GB recommended |
+| Storage | Sufficient space for source code and generated files |
+| Display | Standard monitor |
+| Internet | Not required for experiment execution after library installation |
+
+### 4.3 Python Libraries Used
+
+**NumPy:** Used for random number generation, conditional normal sampling, mathematical calculations, and statistical analysis.
+
+**Pandas:** Used to create DataFrames and export generated samples and statistical results into CSV files.
+
+**Matplotlib:** Used to generate scatter plots, histograms, and trace plots.
+
+**Pathlib:** Used to manage output directory and file paths.
+
+**Sys and Traceback:** Used for error reporting and controlled program termination.
+
+## 05. DATASET DESCRIPTION
+
+### 5.1 Dataset Overview
+
+No external dataset is required for this experiment.
+
+A synthetic bivariate normal probability distribution is used as the target distribution. The dataset is generated through Gibbs Sampling rather than being loaded from an external file.
+
+### 5.2 Distribution Parameters
+
+| Parameter | Value |
+|---|---:|
+| Mean of X | 0 |
+| Mean of Y | 0 |
+| Standard deviation of X | 1 |
+| Standard deviation of Y | 1 |
+| Correlation | 0.8 |
+| Total iterations | 10,000 |
+| Burn-in samples | 1,000 |
+| Retained samples | 9,000 |
+| Random seed | 42 |
+
+### 5.3 Dataset Structure
+
+Each generated observation contains two numerical variables:
+
+| Column | Description |
+|---|---|
+| Iteration | Sampling iteration number |
+| X | Generated value of random variable X |
+| Y | Generated value of random variable Y |
+| Burn_In | Indicates whether the sample belongs to the burn-in period |
+
+The final retained dataset contains the X and Y values after removing the initial 1,000 burn-in iterations.
+
+### 5.4 Random Seed
+
+The experiment uses NumPy random seed 42.
+
+Setting a fixed random seed makes the generated sampling sequence reproducible when the same implementation and environment are used.
+
+## 06. METHODOLOGY
+
+The experiment follows these steps:
+
+### Step 1: Import Required Libraries
+
+Import NumPy, Pandas, and Matplotlib for sampling, data processing, and visualization.
+
+### Step 2: Define the Target Distribution
+
+Set the means, standard deviations, and correlation coefficient of the bivariate normal distribution.
+
+### Step 3: Configure Sampling
+
+Set the total number of iterations to 10,000, burn-in to 1,000, and random seed to 42.
+
+### Step 4: Initialize Variables
+
+Create arrays for storing X and Y samples and initialize both variables to zero.
+
+### Step 5: Calculate Conditional Parameters
+
+Calculate the conditional means and standard deviations for X given Y and Y given X.
+
+### Step 6: Perform Gibbs Sampling
+
+For every iteration:
+
+- Sample X from its conditional normal distribution using the previous Y value.
+- Sample Y from its conditional normal distribution using the newly updated X value.
+- Store both generated values.
+
+### Step 7: Remove Burn-in Samples
+
+Discard the first 1,000 generated observations and retain the remaining 9,000 samples.
+
+### Step 8: Create DataFrames
+
+Store all generated samples and retained samples using Pandas DataFrames.
+
+### Step 9: Statistical Analysis
+
+Calculate:
+
+- Mean of X.
+- Mean of Y.
+- Standard deviation of X.
+- Standard deviation of Y.
+- Correlation between X and Y.
+
+Compare the observed statistics with their theoretical values.
+
+### Step 10: Generate Visualizations
+
+Create and save the scatter plot, two histograms, and two trace plots using Matplotlib.
+
+### Step 11: Export Results
+
+Save generated samples, statistical summaries, correlation matrix, visualizations, and execution logs inside the output directory.
+
+## 07. ALGORITHMS AND MODEL CONFIGURATION
+
+### 7.1 Gibbs Sampling Algorithm
+
+**Input:**
+- Target bivariate normal distribution.
+- Conditional distributions of X and Y.
+- Number of iterations = 10,000.
+- Burn-in = 1,000.
+
+**Algorithm:**
+
+1. Initialize X₀ = 0 and Y₀ = 0.
+2. For each iteration i from 1 to 9,999:
+   - Calculate the conditional mean of X using Y(i-1).
+   - Generate X(i) from its conditional normal distribution.
+   - Calculate the conditional mean of Y using the updated X(i).
+   - Generate Y(i) from its conditional normal distribution.
+3. Store the generated X and Y values.
+4. Remove the first 1,000 observations.
+5. Analyse the remaining 9,000 observations.
+6. Generate the required plots and statistical summaries.
+
+**Output:** Generated samples approximating the target bivariate normal distribution.
+
+### 7.2 Conditional Sampling Equations
+
+The standard deviation used for both conditional distributions is calculated using:
+
+\[
+\sigma\sqrt{1-\rho^2}
+\]
+
+For the configured parameters:
+
+\[
+\sqrt{1-0.8^2}=\sqrt{0.36}=0.6
+\]
+
+Therefore, both conditional standard deviations are 0.6.
+
+### 7.3 Model Configuration
+
+| Configuration | Value |
+|---|---|
+| Sampling Algorithm | Gibbs Sampling |
+| Distribution | Bivariate Normal |
+| Random Seed | 42 |
+| Initial X | 0 |
+| Initial Y | 0 |
+| Total Iterations | 10,000 |
+| Burn-in | 1,000 |
+| Retained Samples | 9,000 |
+| Conditional Sampling | NumPy Normal Random Generator |
+| Output Format | CSV and PNG |
+
+### 7.4 Evaluation Approach
+
+The generated samples are evaluated by comparing their observed means, standard deviations, and correlation with the theoretical parameters of the target distribution.
+
+This practical does not train a supervised classification or regression model. Therefore, classifier accuracy and cross-validation scores are not applicable to this sampling experiment. The evaluation focuses on how closely the generated samples approximate the specified probability distribution.
+
+## 08. EXPERIMENTAL RESULTS
+
+### 8.1 Execution Configuration
+
+The experiment was executed successfully using Python 3.13.5.
+
+| Parameter | Actual Configuration |
+|---|---|
+| Random Seed | 42 |
+| Total Generated Samples | 10,000 |
+| Burn-in Samples Removed | 1,000 |
+| Final Retained Samples | 9,000 |
+| Target Correlation | 0.8 |
+
+### 8.2 First Five Generated Samples
+
+The following are the first five retained samples from the actual execution:
+
+| X | Y |
+|---:|---:|
+| 0.462502 | -0.076940 |
+| -0.466659 | -0.460039 |
+| -0.843483 | -0.859563 |
+| -1.823819 | -1.331079 |
+| -1.064140 | -1.341565 |
+
+### 8.3 Statistical Results
+
+| Parameter | Theoretical Value | Observed Value |
+|---|---:|---:|
+| Mean of X | 0.000000 | 0.003141 |
+| Mean of Y | 0.000000 | 0.003975 |
+| Standard Deviation of X | 1.000000 | 0.984194 |
+| Standard Deviation of Y | 1.000000 | 0.983021 |
+| Correlation between X and Y | 0.800000 | 0.796527 |
+
+### 8.4 Statistical Differences
+
+| Parameter | Absolute Difference |
+|---|---:|
+| Mean of X | 0.003141 |
+| Mean of Y | 0.003975 |
+| Standard Deviation of X | 0.015806 |
+| Standard Deviation of Y | 0.016979 |
+| Correlation | 0.003473 |
+
+### 8.5 Correlation Matrix
+
+The observed correlation matrix obtained from the retained samples is:
+
+| Variable | X | Y |
+|---|---:|---:|
+| X | 1.000000 | 0.796527 |
+| Y | 0.796527 | 1.000000 |
+
+### 8.6 Execution Result
+
+The program successfully completed all 10,000 sampling iterations and removed the first 1,000 burn-in samples.
+
+The final dataset contains 9,000 retained observations.
+
+The observed means are close to the theoretical means of zero. The observed standard deviations are close to one, and the observed correlation of 0.796527 is close to the target correlation of 0.8.
+
+All five required visualizations and the four CSV files were generated successfully.
+
+## 09. VISUALIZATION OF EXPERIMENTAL RESULTS
+
+The Gibbs Sampling implementation generates five visualizations to understand the distribution and behaviour of the generated samples.
+
+### 9.1 Scatter Plot of Gibbs Samples
+
+![Gibbs Sampling Scatter Plot](output/gibbs_scatter_plot.png)
+
+**Figure 9.1: Scatter Plot of Gibbs Sampling Results**
+
+The scatter plot displays the relationship between the retained X and Y samples. The points form a positively oriented elliptical pattern, which is consistent with the target positive correlation of 0.8.
+
+### 9.2 Histogram of X Samples
+
+![Histogram of X Samples](output/gibbs_histogram_x.png)
+
+**Figure 9.2: Histogram of X Samples**
+
+This histogram represents the frequency distribution of the retained X samples. The distribution is approximately bell-shaped and centred close to the theoretical mean of zero.
+
+### 9.3 Histogram of Y Samples
+
+![Histogram of Y Samples](output/gibbs_histogram_y.png)
+
+**Figure 9.3: Histogram of Y Samples**
+
+This histogram represents the frequency distribution of the retained Y samples. It shows an approximately normal distribution centred close to zero.
+
+### 9.4 Trace Plot of X Samples
+
+![Trace Plot of X Samples](output/gibbs_trace_x.png)
+
+**Figure 9.4: Trace Plot of X Samples**
+
+The trace plot displays the movement of the X variable across the initial 1,000 iterations of the complete sampling chain. It helps visualize how the sampled values change over successive iterations, including the burn-in period.
+
+### 9.5 Trace Plot of Y Samples
+
+![Trace Plot of Y Samples](output/gibbs_trace_y.png)
+
+**Figure 9.5: Trace Plot of Y Samples**
+
+The trace plot displays the movement of the Y variable across the initial 1,000 iterations of the complete sampling chain. It helps inspect the variation and movement of the generated samples over time.
+
+---
+
+## 10. OBSERVATIONS
+
+The following observations were obtained from the actual execution of the Gibbs Sampling program:
+
+1. The program successfully generated 10,000 samples using sequential conditional sampling.
+2. The first 1,000 samples were removed as burn-in samples.
+3. A total of 9,000 samples were retained for statistical analysis.
+4. The observed mean of X was 0.003141, which is close to the theoretical mean of 0.
+5. The observed mean of Y was 0.003975, which is close to the theoretical mean of 0.
+6. The observed standard deviation of X was 0.984194, compared with the theoretical value of 1.
+7. The observed standard deviation of Y was 0.983021, compared with the theoretical value of 1.
+8. The observed correlation between X and Y was 0.796527, which is close to the target correlation of 0.8.
+9. The scatter plot shows a positive relationship between X and Y.
+10. Both histograms show approximately bell-shaped distributions.
+11. The trace plots show the movement of the sampled variables over successive iterations.
+12. Small differences between theoretical and observed statistics are expected because the experiment uses a finite number of generated samples.
+13. Successive MCMC samples may be correlated; therefore, the retained samples should not automatically be treated as independent observations.
+
+### 10.1 Performance Evaluation
+
+The experiment evaluates the generated samples by comparing their empirical statistics with the known parameters of the target bivariate normal distribution.
+
+| Parameter | Theoretical Value | Observed Value | Absolute Difference |
+|---|---:|---:|---:|
+| Mean of X | 0.000000 | 0.003141 | 0.003141 |
+| Mean of Y | 0.000000 | 0.003975 | 0.003975 |
+| Standard Deviation of X | 1.000000 | 0.984194 | 0.015806 |
+| Standard Deviation of Y | 1.000000 | 0.983021 | 0.016979 |
+| Correlation | 0.800000 | 0.796527 | 0.003473 |
+
+The observed statistics are close to the theoretical parameters, indicating that the implementation successfully approximates the intended joint distribution.
+
+**Note:** CO4 refers to evaluating machine learning models using performance parameters and cross-validation. This practical focuses on probabilistic sampling rather than supervised model training. Therefore, classifier performance metrics and cross-validation are not applicable here. Distributional agreement is used as the appropriate evaluation method.
+
+---
+
+## 11. CONCLUSION
+
+Gibbs Sampling was successfully implemented in Python to generate samples from a bivariate normal probability distribution.
+
+The experiment demonstrated how a joint probability distribution can be sampled using conditional probability distributions. At each iteration, X was sampled using the previous value of Y, followed by sampling Y using the newly generated value of X.
+
+A total of 10,000 iterations were performed, and the first 1,000 samples were discarded as burn-in. The remaining 9,000 samples were used for statistical analysis and visualization.
+
+The observed means, standard deviations, and correlation were close to their theoretical values:
+
+- Observed mean of X: 0.003141.
+- Observed mean of Y: 0.003975.
+- Observed standard deviation of X: 0.984194.
+- Observed standard deviation of Y: 0.983021.
+- Observed correlation: 0.796527.
+
+The scatter plot, histograms, and trace plots helped examine the generated samples and their distribution.
+
+Thus, the practical successfully demonstrated the working principle of Gibbs Sampling and its application in generating samples from a joint probability distribution.
+
+---
+
+## 12. GENERATED FILES AND OUTPUT STRUCTURE
+
+The experiment generated CSV files containing samples and statistical results, PNG images containing visualizations, and a text log containing execution details.
+
+### 12.1 Directory Structure
+
+The final directory structure is:
+
+```text
+Experiment - 07/
+├── experiment_7_gibbs_sampling.py
+├── README.md
+└── output/
+    ├── all_gibbs_samples.csv
+    ├── gibbs_correlation_matrix.csv
+    ├── gibbs_samples_after_burnin.csv
+    ├── gibbs_statistical_summary.csv
+    ├── gibbs_scatter_plot.png
+    ├── gibbs_histogram_x.png
+    ├── gibbs_histogram_y.png
+    ├── gibbs_trace_x.png
+    ├── gibbs_trace_y.png
+    └── experiment_output.txt 12.2 Python Source File
+File Name	Description
+experiment_7_gibbs_sampling.py	Implements Gibbs Sampling, generates samples, calculates statistical summaries, creates visualizations, and saves execution results.
+
+12.3 CSV Output Files
+File Name	Rows	Columns	Description
+all_gibbs_samples.csv	10,000	4	Stores all generated samples, iteration numbers, and burn-in information.
+gibbs_samples_after_burnin.csv	9,000	3	Stores retained samples after removing burn-in observations.
+gibbs_statistical_summary.csv	5	4	Stores theoretical and observed statistical values and their differences.
+gibbs_correlation_matrix.csv	2	3	Stores the correlation matrix of the retained X and Y samples.
+
+All four CSV files were checked successfully, and no missing values were found.
+12.4 Visualization Files
+File Name	Dimensions	Description
+gibbs_scatter_plot.png	1200 × 900	Scatter plot showing the relationship between X and Y.
+gibbs_histogram_x.png	1200 × 750	Frequency distribution of X samples.
+gibbs_histogram_y.png	1200 × 750	Frequency distribution of Y samples.
+gibbs_trace_x.png	1500 × 750	Trace plot of X samples.
+gibbs_trace_y.png	1500 × 750	Trace plot of Y samples.
+
+All five PNG files were generated and verified as valid, non-empty images.
+12.5 Execution Log
+File Name	Description
+experiment_output.txt	Contains the recorded execution output, sampling information, and statistical results.
+
+12.6 Output Summary
+Item	Verified Result
+Total generated samples	10,000
+Burn-in samples removed	1,000
+Retained samples	9,000
+CSV files	4
+Visualization files	5
+Execution log	1
+Total output files	10
+Missing CSV values	None
+
+
+13. REFERENCES
+The following references were used for understanding Gibbs Sampling, Markov Chain Monte Carlo, and the Python libraries used in this practical.
+1. Wikipedia, "Gibbs Sampling."
+   https://en.wikipedia.org/wiki/Gibbs_sampling
+2. Wikipedia, "Markov Chain Monte Carlo."
+   https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo
+3. GeeksforGeeks, "Gibbs Sampling in Machine Learning."
+   https://www.geeksforgeeks.org/machine-learning/gibbs-sampling-in-machine-learning/
+4. NumPy Documentation, "numpy.random.normal."
+   https://numpy.org/doc/stable/reference/random/generated/numpy.random.normal.html
+5. SciPy Documentation, "Statistical Functions."
+   https://docs.scipy.org/doc/scipy/reference/stats.html
+
+14. FINAL RESULT
+Gibbs Sampling was successfully implemented using Python to generate samples from a bivariate normal distribution with a target correlation of 0.8.
+
+The program completed 10,000 iterations, removed 1,000 burn-in samples, and retained 9,000 samples for analysis. The observed mean, standard deviation, and correlation values were close to their theoretical values.
+
+Four CSV files, five visualization images, and one execution log were successfully generated and verified.
+
+The experiment demonstrates the application of conditional probability distributions and Markov Chain Monte Carlo sampling for approximating a joint probability distribution.
+
+Therefore, the practical was successfully completed and the objectives were achieved.
+
+Course Outcome Mapping: CO4
+
+END OF PRACTICAL
+
+CO MAPPING: CO4

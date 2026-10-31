@@ -1,0 +1,81 @@
+=================================================================
+PRACTICAL 7: GIBBS SAMPLING
+COURSE OUTCOME: CO4
+=================================================================
+
+1. EXPERIMENT CONFIGURATION
+-----------------------------------------------------------------
+Random seed             : 42
+Mean of X               : 0.0
+Mean of Y               : 0.0
+Standard deviation of X : 1.0
+Standard deviation of Y : 1.0
+Correlation             : 0.8
+Total iterations        : 10000
+Burn-in iterations      : 1000
+
+2. RUNNING GIBBS SAMPLING
+-----------------------------------------------------------------
+[SUCCESS] Gibbs Sampling completed.
+
+3. BURN-IN REMOVAL
+-----------------------------------------------------------------
+Total generated samples : 10000
+Burn-in samples removed : 1000
+Final retained samples  : 9000
+
+4. FIRST FIVE RETAINED SAMPLES
+-----------------------------------------------------------------
+        X         Y
+ 0.462502 -0.076940
+-0.466659 -0.460039
+-0.843483 -0.859563
+-1.823819 -1.331079
+-1.064140 -1.341565
+
+5. STATISTICAL ANALYSIS
+-----------------------------------------------------------------
+                  Parameter  Theoretical Value  Observed Value  Absolute Difference
+                  Mean of X           0.000000        0.003141             0.003141
+                  Mean of Y           0.000000        0.003975             0.003975
+    Standard Deviation of X           1.000000        0.984194             0.015806
+    Standard Deviation of Y           1.000000        0.983021             0.016979
+Correlation between X and Y           0.800000        0.796527             0.003473
+
+6. CORRELATION MATRIX
+-----------------------------------------------------------------
+         X        Y
+X 1.000000 0.796527
+Y 0.796527 1.000000
+
+7. GENERATING VISUALIZATIONS
+-----------------------------------------------------------------
+[SUCCESS] All five visualizations saved.
+
+8. EXPERIMENT SUMMARY
+-----------------------------------------------------------------
+Observed mean of X       : 0.003141
+Observed mean of Y       : 0.003975
+Observed correlation     : 0.796527
+Theoretical mean of X    : 0.000000
+Theoretical mean of Y    : 0.000000
+Theoretical correlation  : 0.800000
+
+9. GENERATED OUTPUT FILES
+-----------------------------------------------------------------
+all_gibbs_samples.csv                          500441 bytes
+experiment_output.txt                            2383 bytes
+gibbs_correlation_matrix.csv                       53 bytes
+gibbs_histogram_x.png                           33442 bytes
+gibbs_histogram_y.png                           33344 bytes
+gibbs_samples_after_burnin.csv                 398452 bytes
+gibbs_scatter_plot.png                         307573 bytes
+gibbs_statistical_summary.csv                     383 bytes
+gibbs_trace_x.png                              207319 bytes
+gibbs_trace_y.png                              210294 bytes
+
+=================================================================
+PRACTICAL 7 EXECUTION COMPLETED SUCCESSFULLY
+Gibbs Sampling generated samples from the target distribution.
+END OF EXPERIMENT
+=================================================================

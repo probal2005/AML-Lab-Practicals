@@ -1,0 +1,73 @@
+==================================================================
+AML PRACTICAL 8: HIDDEN MARKOV MODEL
+Weather Sequence Prediction Using the Viterbi Algorithm
+==================================================================
+
+HIDDEN STATES
+0 = Rainy
+1 = Sunny
+
+OBSERVATION SYMBOLS
+0 = Walk
+1 = Shop
+2 = Clean
+
+START PROBABILITIES
+[0.6 0.4]
+
+TRANSITION PROBABILITY MATRIX
+Rows: current state; columns: next state
+[[0.7 0.3]
+ [0.4 0.6]]
+
+EMISSION PROBABILITY MATRIX
+Columns: Walk, Shop, Clean
+[[0.1 0.4 0.5]
+ [0.6 0.3 0.1]]
+
+OBSERVATION SEQUENCE
+Walk -> Shop -> Clean -> Walk -> Walk -> Shop -> Clean
+
+PREDICTED HIDDEN STATE SEQUENCE (VITERBI)
+Sunny -> Rainy -> Rainy -> Sunny -> Sunny -> Rainy -> Rainy
+
+Log Probability of Observation Sequence: -9.928373
+
+OBSERVATION AND PREDICTED WEATHER TABLE
+------------------------------------------------------------------
+Time    Observation     Predicted State     
+------------------------------------------------------------------
+1       Walk            Sunny               
+2       Shop            Rainy               
+3       Clean           Rainy               
+4       Walk            Sunny               
+5       Walk            Sunny               
+6       Shop            Rainy               
+7       Clean           Rainy               
+
+POSTERIOR STATE PROBABILITIES
+These are probabilities for each hidden state given the full
+observation sequence, calculated by the forward-backward method.
+Time 1: Walk   | Rainy = 0.2272, Sunny = 0.7728
+Time 2: Shop   | Rainy = 0.6009, Sunny = 0.3991
+Time 3: Clean  | Rainy = 0.7876, Sunny = 0.2124
+Time 4: Walk   | Rainy = 0.1727, Sunny = 0.8273
+Time 5: Walk   | Rainy = 0.1529, Sunny = 0.8471
+Time 6: Shop   | Rainy = 0.6040, Sunny = 0.3960
+Time 7: Clean  | Rainy = 0.8609, Sunny = 0.1391
+
+GENERATED SAMPLE OBSERVATIONS
+Clean -> Walk -> Shop -> Clean -> Clean -> Clean -> Walk -> Shop -> Clean -> Shop
+
+GENERATED SAMPLE HIDDEN STATES
+Rainy -> Sunny -> Rainy -> Rainy -> Rainy -> Rainy -> Sunny -> Rainy -> Rainy -> Rainy
+
+ANALYSIS
+- The Viterbi algorithm finds the single most likely hidden-state path.
+- Transition probabilities describe movement between weather states.
+- Emission probabilities describe activities associated with each state.
+- Posterior probabilities quantify uncertainty at each time step.
+- The generated sample is stochastic; its sequence may vary by configuration.
+
+EXPERIMENT STATUS: COMPLETED
+==================================================================
